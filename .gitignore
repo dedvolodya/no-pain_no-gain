@@ -37,3 +37,9 @@ libs/
 proguard-rules.pro
 androidTest/
 test/
+mipmap-hdpi/
+mipmap-mdpi/
+mipmap-xhdpi/
+drawable/
+mipmap-xxhdpi/
+mipmap-xxxhdpi/
