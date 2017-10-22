@@ -1,4 +1,4 @@
-package com.nopain_nogain.npng;
+package com.example.vlad.npng;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
