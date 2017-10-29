@@ -17,4 +17,9 @@ public class MainActivity extends AppCompatActivity {
         Intent intent  = new Intent(this, CalendarActivity.class);
         startActivity(intent);
     }
+
+    protected void onClickPhoto (View v) {
+        Intent intent  = new Intent(this, ActivityPhotoGallery.class);
+        startActivity(intent);
+    }
 }
