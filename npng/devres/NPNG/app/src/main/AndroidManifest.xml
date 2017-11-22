@@ -27,6 +27,7 @@
         <activity android:name=".ProgressActivity"/>
         <activity android:name=".MainActivity"/>
         <activity android:name=".ActivityDateBaseExercise"/>
+        <activity android:name=".Test"/>
 
     </application>
 

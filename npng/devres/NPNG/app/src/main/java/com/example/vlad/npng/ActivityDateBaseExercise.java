@@ -3,9 +3,6 @@ package com.example.vlad.npng;
 import android.app.Activity;
 import android.os.Bundle;
 
-/**
- * Created by Vlad on 28.10.2017.
- */
 
 public class ActivityDateBaseExercise extends Activity {
 

@@ -20,10 +20,21 @@
         android:id="@+id/button2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignEnd="@+id/button"
-        android:layout_below="@+id/button"
         android:layout_marginTop="24dp"
-        android:text="Photo" />
+        android:onClick="onClickPhotoActivity"
+        android:text="Photo"
+        android:layout_below="@+id/button"
+        android:layout_alignParentStart="true" />
+
+    <Button
+        android:id="@+id/button3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/button2"
+        android:layout_marginTop="37dp"
+        android:onClick="onClickTest"
+        android:text="Test" />
 
 
 </RelativeLayout>

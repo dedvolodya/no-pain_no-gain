@@ -7,9 +7,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.widget.CalendarView;
 import android.widget.Toast;
 
-/**
- * Created by Vlad on 23.10.2017.
- */
 
 public class CalendarActivity extends AppCompatActivity {
     CalendarView calendar;

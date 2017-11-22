@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">NPNG</string>
+    <string name="image_information">Image Information</string>
 </resources>
