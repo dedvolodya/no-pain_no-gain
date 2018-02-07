@@ -1,18 +1,21 @@
 package com.example.vlad.npng;
 
-public class TrainingTable {
 
-
-}
+import android.app.Activity;
 
 public class ExerciseTable {
     public String nameExercise;
-    public int countAttempt;
-    public int countRepeat;
+    public int id;
 
-    public ExerciseTable(String nameExercise, int countAttempt, int countRepeat) {
+    public ExerciseTable( ){}
+
+    public ExerciseTable( String nameExercise) {
         this.nameExercise = nameExercise;
-        this.countAttempt = countAttempt;
-        this.countRepeat = countRepeat;
     }
+
+    public ExerciseTable( int id , String nameExercise) {
+        this.nameExercise = nameExercise;
+        this.id = id;
+    }
+
 }

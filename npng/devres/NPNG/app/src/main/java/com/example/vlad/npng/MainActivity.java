@@ -27,4 +27,14 @@ public class MainActivity extends AppCompatActivity {
         Intent intent3  = new Intent(this, Test.class);
         startActivity(intent3);
     }
+
+    protected void onClickAdding (View v) {
+        Intent intent4  = new Intent(this, CreateExercise.class);
+        startActivity(intent4);
+    }
+
+    protected void onClickTrain (View v) {
+        Intent intent5  = new Intent(this, CreateTrain.class);
+        startActivity(intent5);
+    }
 }

@@ -29,7 +29,7 @@ public class CalendarActivity extends AppCompatActivity {
                         .append("-").append(mDay).append("-").append(mYear)
                         .append(" ").toString();
                 Toast.makeText(getApplicationContext(), selectedDate, Toast.LENGTH_LONG).show();
-                Intent intent1 = new Intent(getApplicationContext(), ActivityDateBaseExercise.class);
+                Intent intent1 = new Intent(getApplicationContext(), CreateExercise.class);
                 startActivity(intent1);
 
             }
