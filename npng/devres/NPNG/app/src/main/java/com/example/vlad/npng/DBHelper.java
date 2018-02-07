@@ -30,7 +30,7 @@ public DBHelper(Context context) {
     @Override
     public void onCreate(SQLiteDatabase db) {
         db.execSQL("create table " + TABLE_EXERCISE + " ("
-            + key_id + " integer primary key," + key_name_exercise + " text,");
+            + key_id + " integer primary key," + key_name_exercise + " text )");
 
     }
 
