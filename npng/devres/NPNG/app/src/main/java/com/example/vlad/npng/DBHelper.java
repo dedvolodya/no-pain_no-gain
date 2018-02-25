@@ -16,15 +16,27 @@ public class DBHelper extends SQLiteOpenHelper {
 
     public static final String TABLE_TRAINING = "training";
     public static final String TABLE_EXERCISE = "exercise";
+    public static final String TABLE_APPROACH = "approach";
+    public static final String TABLE_REPEAT = "repeat";
 
     // EXERCISE TABL
-    public static final String key_id = "_id";
+    public static final String key_id_exercise = "_id";
     public static final String key_name_exercise = "name_exercise";
+    public static final String key_approach_exercise = "approach";
 
     // TRAIN TABL
-    public static final String key_train_id = "_id";
+    public static final String key_id_train = "_id";
     public static final String key_name_train = "name_train";
     public static final String key_keys_exercise = "keys_exercise";
+    public static final String key_week_day = "week_day";
+
+    // COUNT APPROACH TABLE
+    public static final String key_id_approach = "_id";
+    public static final String key_repeats_exercise = "repeats";
+
+    // COUNT REPEAT TABLE
+    public static final String key_id_repeat = "_id";
+    public static final String key_weight = "weight";
 
 
 public DBHelper(Context context) {
@@ -33,17 +45,26 @@ public DBHelper(Context context) {
     @Override
     public void onCreate(SQLiteDatabase db) {
         db.execSQL("create table " + TABLE_EXERCISE + " ("
-            + key_id + " integer primary key," + key_name_exercise + " text )");
+            + key_id_exercise + " integer primary key," + key_name_exercise +
+                " text," + key_approach_exercise + " text )");
 
         db.execSQL("create table " + TABLE_TRAINING + " ("
-                + key_id + " integer primary key," + key_name_train + " text,"
-                + key_keys_exercise + " text )");
+                + key_id_train + " integer primary key," + key_name_train + " text,"
+                + key_keys_exercise + " text," + key_week_day + " integer )");
+
+        db.execSQL("create table " + TABLE_APPROACH + " ("
+                + key_id_approach + " integer primary key," + key_repeats_exercise + " text )");
+
+        db.execSQL("create table " + TABLE_REPEAT + " ("
+                + key_id_repeat + " integer primary key," + key_weight + " integer )");
     }
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         db.execSQL("drop table if exists " + TABLE_EXERCISE);
         db.execSQL("drop table if exists " + TABLE_TRAINING);
+        db.execSQL("drop table if exists " + TABLE_APPROACH);
+        db.execSQL("drop table if exists " + TABLE_REPEAT);
 
         onCreate(db);
     }
@@ -56,9 +77,6 @@ public DBHelper(Context context) {
         db.close();
     }
 
-    public void addExerciseToTrainTable() {
-
-    }
 
 
 
@@ -66,8 +84,8 @@ public DBHelper(Context context) {
     ExerciseTable getContact(int id) {
        SQLiteDatabase db = this.getReadableDatabase();
 
-        Cursor cursor = db.query(TABLE_EXERCISE, new String[] { key_id,
-                        key_name_exercise}, key_id + "=?",
+        Cursor cursor = db.query(TABLE_EXERCISE, new String[] { key_id_exercise,
+                        key_name_exercise}, key_id_exercise + "=?",
                 new String[] { String.valueOf(id) }, null, null, null, null);
         if (cursor != null)
             cursor.moveToFirst();
@@ -101,32 +119,32 @@ public DBHelper(Context context) {
         return contactList;
     }
 
-    /*public String[] getAllTrainTables() {
-        ArrayList<String> contactList = new ArrayList<String>();
+    public ArrayList<TrainTable> getAllTrainTables() {
+        ArrayList<TrainTable> contactList = new ArrayList<TrainTable>();
         // Select All Query
-        String selectQuery = "SELECT  * FROM " + TABLE_EXERCISE;
+        String selectQuery = "SELECT  * FROM " + TABLE_TRAINING;
 
-        SQLiteDatabase db = this.getWritableDatabase();
+       SQLiteDatabase db = this.getReadableDatabase();
         Cursor cursor = db.rawQuery(selectQuery, null);
 
 
         if (cursor.moveToFirst()) {
             do {
-                ExerciseTable exerciseTable = new ExerciseTable();
-                exerciseTable.id = Integer.parseInt(cursor.getString(0));
-                exerciseTable.nameExercise = cursor.getString(1);
+                TrainTable trainTable = new TrainTable();
+                trainTable.id = Integer.parseInt(cursor.getString(0));
+                trainTable.nameTrain = cursor.getString(1);
 
-                contactList.add(exerciseTable);
+                contactList.add(trainTable);
             } while (cursor.moveToNext());
         }
 
 
         return contactList;
-    }*/
+    }
 
     public void deleteExercise(ExerciseTable exerciseTable) {
         SQLiteDatabase db = this.getWritableDatabase();
-        db.delete(TABLE_EXERCISE, key_id + " = ?",
+        db.delete(TABLE_EXERCISE, key_id_exercise + " = ?",
                 new String[] { String.valueOf(exerciseTable.id) });
         db.close();
     }
@@ -155,9 +173,21 @@ public DBHelper(Context context) {
         return stringList;
     }
 
+    public String [] StrTrainingTable () {
+        ArrayList<TrainTable> table = getAllTrainTables();
+
+        String [] stringList = new String[table.size()];
+
+        for(int i = 0; i < table.size(); i++){
+            stringList[i] = table.get(i).nameTrain;
+        }
+
+        return stringList;
+    }
+
     public void addNewTableTrain(String nameTrain, String exId){
         ContentValues values = new ContentValues();
-        values.put(key_train_id,0);
+        values.put(key_id_train,0);
         values.put(key_name_train,nameTrain);
         values.put(key_keys_exercise,exId);
         SQLiteDatabase db = this.getWritableDatabase();
