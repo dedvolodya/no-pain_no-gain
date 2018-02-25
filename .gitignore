@@ -22,7 +22,6 @@
 hs_err_pid*
 AndroidStudioProjects.iml
 build/
-build.gradle
 .gitignore
 gradle/
 .gradle/
