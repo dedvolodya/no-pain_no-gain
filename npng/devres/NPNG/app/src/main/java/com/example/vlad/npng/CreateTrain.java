@@ -3,9 +3,11 @@ package com.example.vlad.npng;
 import android.app.Activity;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AlertDialog;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
@@ -18,16 +20,23 @@ import android.widget.Toast;
 
 
 public class CreateTrain extends Activity {
-    String[] numbers = {"1","2","3","4","1","2","3","4","1","2","3","4","1","2","3","4"};
-    Button addTrain;
+
+
+    String [] numbers;
+   Button addTrain;
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_train);
-
+        final DBHelper dbHelper = new DBHelper(this);
+        numbers = dbHelper.StrTrainingTable();
         ListView trainList = (ListView) findViewById(R.id.TrainList);
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, numbers);
         trainList.setAdapter(adapter);
+
+        String log = "sz " + numbers.length ;
+
+        Log.d("Name: ", log);
 
     }
             public  void onClickAddTrain(View v){
@@ -45,8 +54,11 @@ public class CreateTrain extends Activity {
                         startActivity(intent7);
                     }
                 } );
+
+
                 alertDialog.show();
                 }
+
 
 
 

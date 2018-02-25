@@ -34,9 +34,6 @@ public class TrainList extends Activity {
     Button getChoice;
 
 
-
-
-
     List<String> listContent;
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -116,6 +113,9 @@ public class TrainList extends Activity {
 
                     //Toast.makeText(getApplicationContext(), exLst, Toast.LENGTH_LONG).show();
                     dbHelper.addNewTableTrain(tName,exLst);
+
+                    Intent intent2 = new Intent(getApplicationContext(),CreateTrain.class);
+                    startActivity(intent2);
                }
             });
 
