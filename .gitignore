@@ -22,9 +22,9 @@
 hs_err_pid*
 AndroidStudioProjects.iml
 build/
-build.gradle
 .gitignore
 gradle/
+npng/devres/npng/build.gradle
 .gradle/
 gradle.properties
 gradlew
@@ -43,3 +43,5 @@ mipmap-xhdpi/
 drawable/
 mipmap-xxhdpi/
 mipmap-xxxhdpi/
+drawable-v24/
+mipmap-anydpi-v26/
