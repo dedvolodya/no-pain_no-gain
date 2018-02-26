@@ -54,7 +54,7 @@ public class TrainList extends Activity {
                     "Standing Palm-In One-Arm Dumbbell Press"};
 
             for (String ex : exercises) {
-                dbHelper.addExercise(new ExerciseTable(GenerationID._ID_exercise++, ex));
+                dbHelper.addExercise(new ExerciseTable(ex));
             }
         }
 

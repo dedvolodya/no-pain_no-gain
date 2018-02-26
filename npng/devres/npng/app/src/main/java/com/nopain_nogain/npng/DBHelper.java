@@ -41,9 +41,6 @@ public class DBHelper extends SQLiteOpenHelper {
     public static final String key_weight = "weight";
 
 
-    // Generation ID
-    GenerationID genID;
-
 
     public DBHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
@@ -52,30 +49,18 @@ public class DBHelper extends SQLiteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase db) {
         db.execSQL("create table if not exists " + TABLE_EXERCISE + " ("
-            + key_id_exercise + " integer primary key," + key_name_exercise +
+            + key_id_exercise + " integer primary key autoincrement," + key_name_exercise +
                 " text," + key_approach_exercise + " text )");
 
         db.execSQL("create table if not exists " + TABLE_TRAINING + " ("
-                + key_id_train + " integer primary key," + key_name_train + " text,"
+                + key_id_train + " integer primary key autoincrement," + key_name_train + " text,"
                 + key_keys_exercise + " text," + key_week_day + " integer )");
 
         db.execSQL("create table if not exists " + TABLE_APPROACH + " ("
-                + key_id_approach + " integer primary key," + key_repeats_exercise + " text )");
+                + key_id_approach + " integer primary key autoincrement," + key_repeats_exercise + " text )");
 
         db.execSQL("create table if not exists " + TABLE_REPEAT + " ("
-                + key_id_repeat + " integer primary key," + key_weight + " integer )");
-
-        String queryCountExercise = "select count(*) from " + TABLE_EXERCISE;
-        String queryCountTrain = "select count(*) from " + TABLE_TRAINING;
-        String queryCountRepeat = "select count(*) from " + TABLE_REPEAT;
-        String queryCountApproach = "select count(*) from " + TABLE_APPROACH;
-
-        int countExercise = (int) DatabaseUtils.longForQuery(db, queryCountExercise, null);
-        int countTrain = (int) DatabaseUtils.longForQuery(db, queryCountTrain, null);
-        int countRepeat = (int) DatabaseUtils.longForQuery(db, queryCountRepeat, null);
-        int countApproach = (int) DatabaseUtils.longForQuery(db, queryCountApproach, null);
-
-        genID = new GenerationID(countExercise, countTrain, countRepeat, countApproach);
+                + key_id_repeat + " integer primary key autoincrement," + key_weight + " integer )");
 
     }
 
@@ -107,8 +92,7 @@ public class DBHelper extends SQLiteOpenHelper {
         if (cursor != null)
             cursor.moveToFirst();
 
-        ExerciseTable exerciseTable = new ExerciseTable(Integer.parseInt(cursor.getString(0)),
-                cursor.getString(1));
+        ExerciseTable exerciseTable = new ExerciseTable(cursor.getString(1));
 
         return exerciseTable;
     }
@@ -125,7 +109,7 @@ public class DBHelper extends SQLiteOpenHelper {
         if (cursor.moveToFirst()) {
             do {
                 ExerciseTable exerciseTable = new ExerciseTable();
-                exerciseTable.id = Integer.parseInt(cursor.getString(0));
+
                 exerciseTable.nameExercise = cursor.getString(1);
 
                 contactList.add(exerciseTable);
@@ -141,7 +125,7 @@ public class DBHelper extends SQLiteOpenHelper {
         // Select All Query
         String selectQuery = "SELECT  * FROM " + TABLE_TRAINING;
 
-       SQLiteDatabase db = this.getReadableDatabase();
+       SQLiteDatabase db = this.getWritableDatabase();
         Cursor cursor = db.rawQuery(selectQuery, null);
 
 
@@ -160,12 +144,12 @@ public class DBHelper extends SQLiteOpenHelper {
         return contactList;
     }
 
-    public void deleteExercise(ExerciseTable exerciseTable) {
+    /*public void deleteExercise(ExerciseTable exerciseTable) {
         SQLiteDatabase db = this.getWritableDatabase();
         db.delete(TABLE_EXERCISE, key_id_exercise + " = ?",
                 new String[] { String.valueOf(exerciseTable.id) });
         db.close();
-    }
+    }*/
 
 
     public int getExerciseCount() {
@@ -203,11 +187,29 @@ public class DBHelper extends SQLiteOpenHelper {
 
     public void addNewTableTrain(String nameTrain, String exId){
         ContentValues values = new ContentValues();
-        values.put(key_id_train,genID.getNewIDTrain());
         values.put(key_name_train,nameTrain);
         values.put(key_keys_exercise,exId);
         SQLiteDatabase db = this.getWritableDatabase();
         db.insert(TABLE_TRAINING, null, values);
         db.close();
     }
+
+
+
+
+
+
+       /* String queryCountExercise = "select count(*) from " + TABLE_EXERCISE;
+        String queryCountTrain = "select count(*) from " + TABLE_TRAINING;
+        String queryCountRepeat = "select count(*) from " + TABLE_REPEAT;
+        String queryCountApproach = "select count(*) from " + TABLE_APPROACH;
+
+        int countExercise = (int) DatabaseUtils.longForQuery(db, queryCountExercise, null);
+        int countTrain = (int) DatabaseUtils.longForQuery(db, queryCountTrain, null);
+        int countRepeat = (int) DatabaseUtils.longForQuery(db, queryCountRepeat, null);
+        int countApproach = (int) DatabaseUtils.longForQuery(db, queryCountApproach, null);
+
+        */
+
+
 }
