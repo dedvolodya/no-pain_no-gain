@@ -24,7 +24,7 @@ AndroidStudioProjects.iml
 build/
 .gitignore
 gradle/
-npng/devres/npng/build.gradle
+build.gradle
 .gradle/
 gradle.properties
 gradlew
