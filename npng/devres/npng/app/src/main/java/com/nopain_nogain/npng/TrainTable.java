@@ -10,9 +10,8 @@ public class TrainTable {
 
     public TrainTable(){}
 
-    public TrainTable(String nmTrain,int _id, String xLst, int _day) {
+    public TrainTable(String nmTrain, String xLst, int _day) {
         nameTrain = nmTrain;
-        id = _id;
         exLst = xLst;
         day = _day;
     }

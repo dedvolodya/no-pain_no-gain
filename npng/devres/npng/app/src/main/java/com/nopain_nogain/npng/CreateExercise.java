@@ -30,7 +30,6 @@ public class CreateExercise extends AppCompatActivity{
 
     }
 
-
    /* protected void onClickAdd(View v)  {
 
 

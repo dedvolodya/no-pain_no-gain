@@ -45,26 +45,18 @@ public class TrainList extends Activity {
         getChoice = (Button) findViewById(R.id.AcceptTrain);
 
         if(dbHelper.getAllContacts().size() == 0) {
-            dbHelper.addExercise(new ExerciseTable(0, "Barbell Full Squat"));
-            dbHelper.addExercise(new ExerciseTable(1, "Barbell Walking Lunge"));
-            dbHelper.addExercise(new ExerciseTable(2, "Wide-Grip Standing Barbell Curl"));
-            dbHelper.addExercise(new ExerciseTable(3, "Hammer Curls"));
-            dbHelper.addExercise(new ExerciseTable(4, "Pullups"));
-            dbHelper.addExercise(new ExerciseTable(5, "Close-Grip Front Lat Pulldown"));
-            dbHelper.addExercise(new ExerciseTable(6, "Smith Machine Calf Raise"));
-            dbHelper.addExercise(new ExerciseTable(7, "Plank"));
-            dbHelper.addExercise(new ExerciseTable(8, "Cocoons"));
-            dbHelper.addExercise(new ExerciseTable(9, "Pushups"));
-            dbHelper.addExercise(new ExerciseTable(10, "Cocoons"));
-            dbHelper.addExercise(new ExerciseTable(11, "Barbell Bench Press - Medium Grip"));
-            dbHelper.addExercise(new ExerciseTable(12, "Dumbbell Bench Press"));
-            dbHelper.addExercise(new ExerciseTable(13, "Dips"));
-            dbHelper.addExercise(new ExerciseTable(14, "Close-Grip Barbell Bench Press"));
-            dbHelper.addExercise(new ExerciseTable(15, "Seated Triceps Press"));
-            dbHelper.addExercise(new ExerciseTable(16, "Side Laterals to Front Raise"));
-            dbHelper.addExercise(new ExerciseTable(17, "Standing Palm-In One-Arm Dumbbell Press"));
-        }
+            String[] exercises = {"Barbell Full Squat", "Barbell Walking Lunge",
+                    "Wide-Grip Standing Barbell Curl", "Hammer Curls", "Pullups",
+                    "Close-Grip Front Lat Pulldown", "Smith Machine Calf Raise",
+                    "Plank", "Cocoons", "Pushups", "Cocoons", "Barbell Bench Press - Medium Grip",
+                    "Dumbbell Bench Press", "Dips", "Close-Grip Barbell Bench Press",
+                    "Seated Triceps Press", "Side Laterals to Front Raise",
+                    "Standing Palm-In One-Arm Dumbbell Press"};
 
+            for (String ex : exercises) {
+                dbHelper.addExercise(new ExerciseTable(GenerationID._ID_exercise++, ex));
+            }
+        }
 
         String [] table = dbHelper.StrExerciseTable();
 
@@ -76,48 +68,42 @@ public class TrainList extends Activity {
 
 
 
-            ArrayAdapter<String> adapter
-
-                    = new ArrayAdapter<String>(this,
-
-                    android.R.layout.simple_list_item_multiple_choice,
-
-                    table);
-            myList.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE);
-
-            myList.setAdapter(adapter);
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
+            android.R.layout.simple_list_item_multiple_choice, table);
+        myList.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE);
+        myList.setAdapter(adapter);
 
 
-            getChoice.setOnClickListener(new Button.OnClickListener() {
+        getChoice.setOnClickListener(new Button.OnClickListener() {
 
 
-                @Override
+            @Override
 
-                public void onClick(View v) {
+            public void onClick(View v) {
 
-                    String exLst = "";
+                String exLst = "";
 
-                    Intent intent = getIntent();
-                    String tName = intent.getStringExtra("trainName");
+                Intent intent = getIntent();
+                String tName = intent.getStringExtra("trainName");
 
-                    int cntChoice = myList.getCount();
+                int cntChoice = myList.getCount();
 
-                    SparseBooleanArray sparseBooleanArray = myList.getCheckedItemPositions();
+                SparseBooleanArray sparseBooleanArray = myList.getCheckedItemPositions();
 
-                    for (int i = 0; i < cntChoice; i++) {
+                for (int i = 0; i < cntChoice; i++) {
 
-                        if (sparseBooleanArray.get(i)) {
-                            exLst += i + " ";
-                        }
+                    if (sparseBooleanArray.get(i)) {
+                        exLst += i + " ";
                     }
+                }
 
-                    //Toast.makeText(getApplicationContext(), exLst, Toast.LENGTH_LONG).show();
-                    dbHelper.addNewTableTrain(tName,exLst);
+                //Toast.makeText(getApplicationContext(), exLst, Toast.LENGTH_LONG).show();
+                dbHelper.addNewTableTrain(tName,exLst);
 
-                    Intent intent2 = new Intent(getApplicationContext(),CreateTrain.class);
-                    startActivity(intent2);
-               }
-            });
+                Intent intent2 = new Intent(getApplicationContext(),CreateTrain.class);
+                startActivity(intent2);
+           }
+        });
 
         }
 

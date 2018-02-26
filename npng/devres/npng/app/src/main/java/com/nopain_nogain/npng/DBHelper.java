@@ -3,8 +3,10 @@ package com.nopain_nogain.npng;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
+import android.database.DatabaseUtils;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.util.Log;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -39,24 +41,42 @@ public class DBHelper extends SQLiteOpenHelper {
     public static final String key_weight = "weight";
 
 
-public DBHelper(Context context) {
-      super(context, DATABASE_NAME, null, DATABASE_VERSION);
-}
+    // Generation ID
+    GenerationID genID;
+
+
+    public DBHelper(Context context) {
+        super(context, DATABASE_NAME, null, DATABASE_VERSION);
+    }
+
     @Override
     public void onCreate(SQLiteDatabase db) {
-        db.execSQL("create table " + TABLE_EXERCISE + " ("
+        db.execSQL("create table if not exists " + TABLE_EXERCISE + " ("
             + key_id_exercise + " integer primary key," + key_name_exercise +
                 " text," + key_approach_exercise + " text )");
 
-        db.execSQL("create table " + TABLE_TRAINING + " ("
+        db.execSQL("create table if not exists " + TABLE_TRAINING + " ("
                 + key_id_train + " integer primary key," + key_name_train + " text,"
                 + key_keys_exercise + " text," + key_week_day + " integer )");
 
-        db.execSQL("create table " + TABLE_APPROACH + " ("
+        db.execSQL("create table if not exists " + TABLE_APPROACH + " ("
                 + key_id_approach + " integer primary key," + key_repeats_exercise + " text )");
 
-        db.execSQL("create table " + TABLE_REPEAT + " ("
+        db.execSQL("create table if not exists " + TABLE_REPEAT + " ("
                 + key_id_repeat + " integer primary key," + key_weight + " integer )");
+
+        String queryCountExercise = "select count(*) from " + TABLE_EXERCISE;
+        String queryCountTrain = "select count(*) from " + TABLE_TRAINING;
+        String queryCountRepeat = "select count(*) from " + TABLE_REPEAT;
+        String queryCountApproach = "select count(*) from " + TABLE_APPROACH;
+
+        int countExercise = (int) DatabaseUtils.longForQuery(db, queryCountExercise, null);
+        int countTrain = (int) DatabaseUtils.longForQuery(db, queryCountTrain, null);
+        int countRepeat = (int) DatabaseUtils.longForQuery(db, queryCountRepeat, null);
+        int countApproach = (int) DatabaseUtils.longForQuery(db, queryCountApproach, null);
+
+        genID = new GenerationID(countExercise, countTrain, countRepeat, countApproach);
+
     }
 
     @Override
@@ -76,9 +96,6 @@ public DBHelper(Context context) {
         db.insert(TABLE_EXERCISE, null, values);
         db.close();
     }
-
-
-
 
     // Getting single contact
     ExerciseTable getContact(int id) {
@@ -134,11 +151,12 @@ public DBHelper(Context context) {
                 trainTable.id = Integer.parseInt(cursor.getString(0));
                 trainTable.nameTrain = cursor.getString(1);
 
+                String log = "id: " + trainTable.id + ", name: " + trainTable.nameTrain;
+                Log.d("TRAINING: ", log);
+
                 contactList.add(trainTable);
             } while (cursor.moveToNext());
         }
-
-
         return contactList;
     }
 
@@ -150,13 +168,11 @@ public DBHelper(Context context) {
     }
 
 
-
     public int getExerciseCount() {
         String countQuery = "SELECT  * FROM " + TABLE_EXERCISE;
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor cursor = db.rawQuery(countQuery, null);
         cursor.close();
-
 
         return cursor.getCount();
     }
@@ -187,7 +203,7 @@ public DBHelper(Context context) {
 
     public void addNewTableTrain(String nameTrain, String exId){
         ContentValues values = new ContentValues();
-        values.put(key_id_train,0);
+        values.put(key_id_train,genID.getNewIDTrain());
         values.put(key_name_train,nameTrain);
         values.put(key_keys_exercise,exId);
         SQLiteDatabase db = this.getWritableDatabase();
