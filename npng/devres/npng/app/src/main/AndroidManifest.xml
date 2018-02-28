@@ -30,6 +30,7 @@
         <activity android:name=".TrainList"/>
         <activity android:name=".Test"/>
         <activity android:name=".RepeatApproachActivity"/>
+        <activity android:name=".RepeatWeightActivity"/>
 
 
     </application>

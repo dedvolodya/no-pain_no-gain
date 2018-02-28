@@ -1,3 +1,9 @@
 <resources>
     <string name="app_name">npng</string>
+
+    <string name="spiner">SpinnerStr</string>
+        <string-array name="types">
+            <item>Kg</item>
+            <item>Sec</item>
+        </string-array>
 </resources>

@@ -15,8 +15,9 @@ import android.widget.Toast;
 import java.util.ArrayList;
 
 public class RepeatApproachActivity extends Activity{
-    String singleExercise;
+    String singleExercise, buf = "";
     ListView myList;
+    int a;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -27,9 +28,9 @@ public class RepeatApproachActivity extends Activity{
         singleExercise = intent.getStringExtra("exLst");
 
         ArrayList<String> table = new ArrayList<String>();
-
-        for(int i  = 0; i < singleExercise.length(); i+=2){
-            table.add(dbHelper.getExerciseById((int)(singleExercise.charAt(i)) - 48));
+        String [] str = singleExercise.split(" ");
+        for(int i  = 0; i < str.length; i++){
+            table.add(dbHelper.getExerciseById(Integer.parseInt(str[i])+1));
         }
 
 
@@ -39,13 +40,18 @@ public class RepeatApproachActivity extends Activity{
         myList = (ListView) findViewById(R.id.exerciseList);
 
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
-                android.R.layout.simple_list_item_multiple_choice, table);
+                android.R.layout.simple_list_item_1, table);
 
         myList.setAdapter(adapter);
 
     }
 
     public void onClickToast(View v) {
-        Toast.makeText(getApplicationContext(),singleExercise+"    "+singleExercise.length(),Toast.LENGTH_LONG).show();
+        Toast.makeText(getApplicationContext(),singleExercise + "    " + buf,Toast.LENGTH_LONG).show();
+    }
+
+    public void onClickTest(View v){
+        Intent intent8 = new Intent(getApplicationContext(),RepeatWeightActivity.class);
+        startActivity(intent8);
     }
 }
