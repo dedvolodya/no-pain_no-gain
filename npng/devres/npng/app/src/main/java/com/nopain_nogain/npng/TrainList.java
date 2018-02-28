@@ -100,7 +100,8 @@ public class TrainList extends Activity {
                 //Toast.makeText(getApplicationContext(), exLst, Toast.LENGTH_LONG).show();
                 dbHelper.addNewTableTrain(tName,exLst);
 
-                Intent intent2 = new Intent(getApplicationContext(),CreateTrain.class);
+                Intent intent2 = new Intent(getApplicationContext(),RepeatApproachActivity.class);
+                intent2.putExtra("exLst",exLst);
                 startActivity(intent2);
            }
         });

@@ -120,6 +120,22 @@ public class DBHelper extends SQLiteOpenHelper {
         return contactList;
     }
 
+    public String getExerciseById(int id) {
+        String singleExercise = "";
+        // Select All Query
+        SQLiteDatabase db = this.getReadableDatabase();
+
+        Cursor cursor = db.query(TABLE_EXERCISE, new String[] { key_id_exercise,
+                        key_name_exercise }, key_id_exercise + "=?",
+                new String[] { String.valueOf(id) }, null, null, null, null);
+        if (cursor != null)
+            cursor.moveToFirst();
+
+        singleExercise = cursor.getString(1);
+
+        return singleExercise;
+    }
+
     public ArrayList<TrainTable> getAllTrainTables() {
         ArrayList<TrainTable> contactList = new ArrayList<TrainTable>();
         // Select All Query
