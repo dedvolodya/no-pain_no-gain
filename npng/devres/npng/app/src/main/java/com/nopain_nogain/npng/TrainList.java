@@ -1,50 +1,35 @@
 package com.nopain_nogain.npng;
 
 import android.app.Activity;
-import android.content.ContentResolver;
-import android.content.ContentValues;
 import android.content.Intent;
-import android.database.CharArrayBuffer;
-import android.database.ContentObserver;
-import android.database.Cursor;
-import android.database.DataSetObserver;
-import android.database.sqlite.SQLiteDatabase;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.util.Log;
 import android.util.SparseBooleanArray;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.Checkable;
 import android.widget.ListView;
-import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import java.util.ArrayList;
-import java.util.List;
 
 
 public class TrainList extends Activity {
-
-
     ListView myList;
-
     Button getChoice;
+    String tmpLst = "";
 
-
-    List<String> listContent;
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_train_list);
 
-        final DBHelper dbHelper = new DBHelper(this);
-        myList = (ListView) findViewById(R.id.TrainListView);
-        getChoice = (Button) findViewById(R.id.AcceptTrain);
+        final DBHelper db = new DBHelper(this);
+        myList = findViewById(R.id.TrainListView);
+        getChoice = findViewById(R.id.AcceptTrain);
 
-        if(dbHelper.getAllContacts().size() == 0) {
+        if(db.getCountExercise() == 0) {
             String[] exercises = {"Barbell Full Squat", "Barbell Walking Lunge",
                     "Wide-Grip Standing Barbell Curl", "Hammer Curls", "Pullups",
                     "Close-Grip Front Lat Pulldown", "Smith Machine Calf Raise",
@@ -54,24 +39,23 @@ public class TrainList extends Activity {
                     "Standing Palm-In One-Arm Dumbbell Press"};
 
             for (String ex : exercises) {
-                dbHelper.addExercise(new ExerciseTable(ex));
+                db.addExercise(new ExerciseTable(0, ex, ""));
             }
         }
 
-        String [] table = dbHelper.StrExerciseTable();
-
-     /*  for (ExerciseTable cn : table) {
-           String log = "Id: " + cn.id + " ,Name: " + cn.nameExercise;
-
-           Log.d("Name: ", log);
-        }*/
-
-
-
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
+        ArrayList<ExerciseTable> table = db.getAllExercise();
+        ArrayAdapter<ExerciseTable> adapter = new ArrayAdapter<>(this,
             android.R.layout.simple_list_item_multiple_choice, table);
         myList.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE);
         myList.setAdapter(adapter);
+
+        myList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
+                tmpLst += "id: " + adapterView +", ";
+
+            }
+        });
 
 
         getChoice.setOnClickListener(new Button.OnClickListener() {
@@ -80,8 +64,7 @@ public class TrainList extends Activity {
             @Override
 
             public void onClick(View v) {
-
-                String exLst = "";
+                StringBuilder exLst = new StringBuilder();
 
                 Intent intent = getIntent();
                 String tName = intent.getStringExtra("trainName");
@@ -91,17 +74,17 @@ public class TrainList extends Activity {
                 SparseBooleanArray sparseBooleanArray = myList.getCheckedItemPositions();
 
                 for (int i = 0; i < cntChoice; i++) {
-
                     if (sparseBooleanArray.get(i)) {
-                        exLst += i + " ";
+                        exLst.append(i).append(" ");
                     }
                 }
 
-                Toast.makeText(getApplicationContext(), exLst, Toast.LENGTH_LONG).show();
-                dbHelper.addNewTableTrain(tName,exLst);
+                Toast.makeText(getApplicationContext(), tmpLst, Toast.LENGTH_LONG).show();
+                TrainTable trainTable = new TrainTable(0, tName, exLst.toString(), -1);
+                db.addTrain(trainTable);
 
                 Intent intent2 = new Intent(getApplicationContext(),RepeatApproachActivity.class);
-                intent2.putExtra("exLst",exLst);
+                intent2.putExtra("exLst", exLst.toString());
                 startActivity(intent2);
            }
         });

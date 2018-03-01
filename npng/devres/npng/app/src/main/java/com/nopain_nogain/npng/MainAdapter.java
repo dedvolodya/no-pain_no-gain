@@ -1,6 +1,5 @@
 package com.nopain_nogain.npng;
 
-
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,7 +12,7 @@ class MainAdapter extends RecyclerView.Adapter<MainAdapter.ViewHolder> {
 
     private ArrayList<String> mDataset;
 
-    public MainAdapter(ArrayList<String> mDataset) {
+    MainAdapter(ArrayList<String> mDataset) {
         this.mDataset = mDataset;
     }
 
@@ -36,11 +35,11 @@ class MainAdapter extends RecyclerView.Adapter<MainAdapter.ViewHolder> {
         return mDataset.size();
     }
 
-    public class ViewHolder extends RecyclerView.ViewHolder{
+    class ViewHolder extends RecyclerView.ViewHolder{
 
-        public TextView mTitle;
+        TextView mTitle;
 
-        public ViewHolder(View itemView) {
+        ViewHolder(View itemView) {
             super(itemView);
             mTitle = (TextView) itemView.findViewById(R.id.title);
         }

@@ -1,26 +1,16 @@
 package com.nopain_nogain.npng;
 
 
-import android.app.Activity;
 import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
-import android.os.Environment;
 import android.provider.MediaStore;
-import android.support.v4.view.ViewPager;
+import android.support.v7.app.AppCompatActivity;
 import android.view.View;
-import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
-import android.view.View.OnClickListener;
-import android.support.v7.app.AppCompatActivity;
-
-import com.bumptech.glide.Glide;
-import com.nopain_nogain.npng.R;
-
-import java.io.File;
 
 public class ActivityPhotoGallery extends AppCompatActivity {
     private static int RESULT_LOAD_IMAGE = 1;
@@ -31,7 +21,7 @@ public class ActivityPhotoGallery extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_photo_gallery);
 
-        ImageButton buttonLoadImage = (ImageButton) findViewById(R.id.imageButtonLoadPhoto);
+        ImageButton buttonLoadImage = findViewById(R.id.imageButtonLoadPhoto);
 
     }
 
@@ -51,15 +41,17 @@ public class ActivityPhotoGallery extends AppCompatActivity {
             Uri selectedImage = data.getData();
             String[] filePathColumn = { MediaStore.Images.Media.DATA };
 
+            assert selectedImage != null;
             Cursor cursor = getContentResolver().query(selectedImage,
                     filePathColumn, null, null, null);
-            cursor.moveToFirst();
-
-            int columnIndex = cursor.getColumnIndex(filePathColumn[0]);
-            String picturePath = cursor.getString(columnIndex);
-            cursor.close();
-
-           ImageView imageView = (ImageView) findViewById(R.id.imageLoadedPhoto);
+            String picturePath = "";
+            assert cursor != null;
+            if (cursor.moveToFirst()) {
+                int columnIndex = cursor.getColumnIndex(filePathColumn[0]);
+                picturePath = cursor.getString(columnIndex);
+                cursor.close();
+            }
+           ImageView imageView = findViewById(R.id.imageLoadedPhoto);
            imageView.setImageBitmap(BitmapFactory.decodeFile(picturePath));
 
         }

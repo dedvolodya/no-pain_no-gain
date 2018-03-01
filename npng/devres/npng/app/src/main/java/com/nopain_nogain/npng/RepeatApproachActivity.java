@@ -27,19 +27,16 @@ public class RepeatApproachActivity extends Activity{
         Intent intent = getIntent();
         singleExercise = intent.getStringExtra("exLst");
 
-        ArrayList<String> table = new ArrayList<String>();
+        ArrayList<ExerciseTable> table = new ArrayList<ExerciseTable>();
+
         String [] str = singleExercise.split(" ");
         for(int i  = 0; i < str.length; i++){
             table.add(dbHelper.getExerciseById(Integer.parseInt(str[i])+1));
         }
 
-
-
-       //table.add("abcdefghi");
-
         myList = (ListView) findViewById(R.id.exerciseList);
 
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
+        ArrayAdapter<ExerciseTable> adapter = new ArrayAdapter<ExerciseTable>(this,
                 android.R.layout.simple_list_item_1, table);
 
         myList.setAdapter(adapter);
