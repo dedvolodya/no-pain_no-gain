@@ -18,16 +18,6 @@ public class MainActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
-    protected void onClickPhotoActivity (View v) {
-        Intent intent2  = new Intent(this, ActivityPhotoGallery.class);
-        startActivity(intent2);
-    }
-
-    protected void onClickTest (View v) {
-        Intent intent3  = new Intent(this, Test.class);
-        startActivity(intent3);
-    }
-
     protected void onClickAdding (View v) {
         Intent intent4  = new Intent(this, CreateExercise.class);
         startActivity(intent4);

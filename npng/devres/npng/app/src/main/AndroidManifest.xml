@@ -21,14 +21,11 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".ActivityPhotoGallery"/>
         <activity android:name=".CalendarActivity"/>
-        <activity android:name=".ProgressActivity"/>
         <activity android:name=".MainActivity"/>
         <activity android:name=".CreateExercise"/>
         <activity android:name=".CreateTrain"/>
         <activity android:name=".TrainList"/>
-        <activity android:name=".Test"/>
         <activity android:name=".RepeatApproachActivity"/>
         <activity android:name=".RepeatWeightActivity"/>
 
