@@ -100,8 +100,9 @@ public class DBHelper extends SQLiteOpenHelper {
     }
 
     // TRAIN IMPLEMENTATION
-    void addTrain(TrainTable trainTable){
+    long addTrain(TrainTable trainTable){
         SQLiteDatabase db = this.getWritableDatabase();
+        long id = -1;
 
         db.beginTransaction();
         try {
@@ -109,13 +110,14 @@ public class DBHelper extends SQLiteOpenHelper {
             values.put(key_name, trainTable.getName());
             values.put(key_day_week, trainTable.getDayWeek());
 
-            db.insertOrThrow(TABLE_TRAINING, null, values);
+            id = db.insertOrThrow(TABLE_TRAINING, null, values);
             db.setTransactionSuccessful();
         } catch (Exception e) {
             Log.d(TAG, "Error while trying add train to database");
         } finally {
             db.endTransaction();
         }
+        return id;
     }
 
     long getCountTrain () {
@@ -183,8 +185,9 @@ public class DBHelper extends SQLiteOpenHelper {
     }
 
     // EXERCISE IMPLEMENTATION
-    void addExercise(ExerciseTable exerciseTable) {
+    long  addExercise(ExerciseTable exerciseTable) {
         SQLiteDatabase db = this.getWritableDatabase();
+        long id = -1;
 
         db.beginTransaction();
         try {
@@ -192,13 +195,14 @@ public class DBHelper extends SQLiteOpenHelper {
             values.put(key_name, exerciseTable.getName());
             values.put(key_train_id, exerciseTable.getTrainId());
 
-            db.insertOrThrow(TABLE_EXERCISE, null, values);
+            id = db.insertOrThrow(TABLE_EXERCISE, null, values);
             db.setTransactionSuccessful();
         } catch (Exception e) {
             Log.d(TAG, "Error while trying add exercise to database");
         } finally {
             db.endTransaction();
         }
+        return id;
     }
 
     long getCountExercise () {
@@ -290,21 +294,23 @@ public class DBHelper extends SQLiteOpenHelper {
     }
 
     // APPROACH IMPLEMENTATION
-    void addApproach(ApproachTable approachTable) {
+    long addApproach(ApproachTable approachTable) {
         SQLiteDatabase db = this.getWritableDatabase();
+        long id = -1;
 
         db.beginTransaction();
         try {
             ContentValues values = new ContentValues();
             values.put(key_exercise_id, approachTable.getExerciseId());
 
-            db.insertOrThrow(TABLE_APPROACH, null, values);
+            id = db.insertOrThrow(TABLE_APPROACH, null, values);
             db.setTransactionSuccessful();
         } catch (Exception e) {
             Log.d(TAG, "Error while trying add approach to database");
         } finally {
             db.endTransaction();
         }
+        return id;
     }
 
     ApproachTable getApproachById(long id) {
@@ -354,8 +360,9 @@ public class DBHelper extends SQLiteOpenHelper {
     }
 
     // REPEAT IMPLEMENTATION
-    void addRepeat(RepeatTable repeatTable) {
+    long addRepeat(RepeatTable repeatTable) {
         SQLiteDatabase db = this.getWritableDatabase();
+        long id = -1;
 
         db.beginTransaction();
         try {
@@ -365,13 +372,14 @@ public class DBHelper extends SQLiteOpenHelper {
             values.put(key_type, repeatTable.getType());
             values.put(key_approach_id, repeatTable.getApproachId());
 
-            db.insertOrThrow(TABLE_REPEAT, null, values);
+            id = db.insertOrThrow(TABLE_REPEAT, null, values);
             db.setTransactionSuccessful();
         } catch (Exception e) {
             Log.d(TAG, "Error while trying add repeat to database");
         } finally {
             db.endTransaction();
         }
+        return id;
     }
 
     RepeatTable getRepeatById(int id) {

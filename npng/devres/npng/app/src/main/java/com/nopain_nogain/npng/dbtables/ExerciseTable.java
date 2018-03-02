@@ -6,9 +6,9 @@ public class ExerciseTable {
     private long id;
     private String name;
     private ArrayList<ApproachTable> approach;
-    private long train_id;
+    private long trainId;
 
-    public ExerciseTable(long id, String name, ArrayList<ApproachTable> approach, long train_id) {
+    public ExerciseTable(long id, String name, ArrayList<ApproachTable> approach, long trainId) {
         this.id = id;
         this.name = "";
         if (name != null) {
@@ -18,7 +18,7 @@ public class ExerciseTable {
         if (approach != null) {
             this.approach.addAll(approach);
         }
-        this.train_id = train_id;
+        this.trainId = trainId;
     }
 
     public long getId () {
@@ -29,12 +29,16 @@ public class ExerciseTable {
         return name;
     }
 
-    public ArrayList<ApproachTable> getApproachesString () {
+    public ArrayList<ApproachTable> getApproach () {
         return approach;
     }
 
     public long getTrainId () {
-        return this.train_id;
+        return this.trainId;
+    }
+
+    public void setTrainId (long trainId) {
+        this.trainId = trainId;
     }
 
     @Override

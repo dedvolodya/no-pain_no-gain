@@ -14,9 +14,10 @@ import com.nopain_nogain.npng.dbtables.ExerciseTable;
 import java.util.ArrayList;
 
 public class RepeatApproachActivity extends Activity{
-    String singleExercise, buf = "";
+    String buf = "";
     ListView myList;
-    int a;
+    ArrayList<ExerciseTable> exerciseId = null;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -24,7 +25,7 @@ public class RepeatApproachActivity extends Activity{
 
         DBHelper dbHelper = new DBHelper(this);
         Intent intent = getIntent();
-        singleExercise = intent.getStringExtra("exLst");
+        exerciseId = intent.getStringExtra("exerciseId");
 
         ArrayList<ExerciseTable> table = new ArrayList<ExerciseTable>();
 
