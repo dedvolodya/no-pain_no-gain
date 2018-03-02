@@ -9,12 +9,6 @@
         android:layout_width="match_parent"
         android:layout_height="389dp" />
 
-    <Button
-        android:id="@+id/addRepeat"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:onClick="onClickToast"
-        android:text="Button" />
 
     <Button
         android:id="@+id/button6"

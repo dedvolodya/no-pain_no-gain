@@ -28,6 +28,7 @@
         <activity android:name=".TrainList"/>
         <activity android:name=".RepeatApproachActivity"/>
         <activity android:name=".RepeatWeightActivity"/>
+        <activity android:name=".AddExerciseActivity"/>
 
 
     </application>

@@ -6,6 +6,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.annotation.RequiresApi;
+import android.util.Log;
 import android.util.SparseBooleanArray;
 import android.view.View;
 import android.widget.AdapterView;
@@ -79,12 +80,12 @@ public class TrainList extends Activity {
                 TrainTable trainTable = new TrainTable(0, trainName, -1, exerciseId);
                 long id = db.addTrain(trainTable);
 
-                for (ExerciseTable exercise :exerciseId){
+                for (ExerciseTable exercise :exerciseId) {
                     exercise.setTrainId(id);
+                    db.addExercise(exercise);
                 }
-
                 Intent intent2 = new Intent(getApplicationContext(),RepeatApproachActivity.class);
-                intent2.putExtra("exerciseId", exerciseId);
+                intent2.putExtra("trainId", id);
                 startActivity(intent2);
            }
         });

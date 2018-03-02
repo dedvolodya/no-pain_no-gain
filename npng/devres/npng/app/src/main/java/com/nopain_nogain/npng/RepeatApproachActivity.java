@@ -4,47 +4,54 @@ package com.nopain_nogain.npng;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
+import android.util.SparseBooleanArray;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
-import android.widget.Toast;
 
 import com.nopain_nogain.npng.dbtables.ExerciseTable;
 
 import java.util.ArrayList;
 
 public class RepeatApproachActivity extends Activity{
-    String buf = "";
     ListView myList;
-    ArrayList<ExerciseTable> exerciseId = null;
+    ArrayAdapter<ExerciseTable> adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_repeat_approach);
 
-        DBHelper dbHelper = new DBHelper(this);
+        DBHelper db = new DBHelper(this);
         Intent intent = getIntent();
-        exerciseId = intent.getStringExtra("exerciseId");
+        long trainId = intent.getLongExtra("trainId", -1);
 
-        ArrayList<ExerciseTable> table = new ArrayList<ExerciseTable>();
+        ArrayList<ExerciseTable> table = db.getAllExerciseByTrainId(trainId);
 
-        String [] str = singleExercise.split(" ");
-        for(int i  = 0; i < str.length; i++){
-            table.add(dbHelper.getExerciseById(Integer.parseInt(str[i])+1));
-        }
 
-        myList = (ListView) findViewById(R.id.exerciseList);
+        myList = findViewById(R.id.exerciseList);
 
-        ArrayAdapter<ExerciseTable> adapter = new ArrayAdapter<ExerciseTable>(this,
+        adapter = new ArrayAdapter<>(this,
                 android.R.layout.simple_list_item_1, table);
 
+        myList.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE);
         myList.setAdapter(adapter);
 
-    }
+        myList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 
-    public void onClickToast(View v) {
-        Toast.makeText(getApplicationContext(),singleExercise + "    " + buf,Toast.LENGTH_LONG).show();
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
+                SparseBooleanArray sparseBooleanArray = myList.getCheckedItemPositions();
+                if (sparseBooleanArray.get(position)) {
+                    Intent intent2 = new Intent(getApplicationContext(),RepeatWeightActivity.class);
+                    intent2.putExtra("exerciseId",adapter.getItem(position).getId());
+                    startActivity(intent2);
+                }
+            }
+        });
+
     }
 
     public void onClickTest(View v){
