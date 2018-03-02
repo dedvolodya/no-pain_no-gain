@@ -8,10 +8,11 @@ import android.support.annotation.Nullable;
 import android.support.v7.app.AlertDialog;
 import android.view.View;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.ListView;
+
+import com.nopain_nogain.npng.dbtables.TrainTable;
 
 import java.util.ArrayList;
 

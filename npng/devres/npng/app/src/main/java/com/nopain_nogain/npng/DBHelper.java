@@ -7,46 +7,48 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
+import com.nopain_nogain.npng.dbtables.ApproachTable;
+import com.nopain_nogain.npng.dbtables.ExerciseTable;
+import com.nopain_nogain.npng.dbtables.RepeatTable;
+import com.nopain_nogain.npng.dbtables.TrainTable;
+
 import java.util.ArrayList;
 
 public class DBHelper extends SQLiteOpenHelper {
+    private final String TAG = "[ERROR-DB]";
 
     private static final int DATABASE_VERSION = 1;
     private static final String DATABASE_NAME = "trainingDb";
 
-    private static final String TABLE_TRAINING = "training";
+    private static final String TABLE_TRAINING = "train";
     private static final String TABLE_EXERCISE = "exercise";
     private static final String TABLE_APPROACH = "approach";
     private static final String TABLE_REPEAT = "repeat";
 
-    // EXERCISE TABLE
-    private static final String key_id_exercise = "_id";
-    private static final String key_name_exercise = "name_exercise";
-    private static final String key_approach_exercise = "approach";
+    // COMMON
+    private static final String key_id = "id";
+    private static final String key_name = "name";
 
-    // TRAIN TABLE
-    private static final String key_id_train = "_id";
-    private static final String key_name_train = "name_train";
-    private static final String key_keys_exercise = "keys_exercise";
-    private static final String key_week_day = "week_day";
+    // TRAIN TABLE <id, name>
+    private static final String key_day_week = "day_week";
 
-    // COUNT APPROACH TABLE
-    private static final String key_id_approach = "_id";
-    private static final String key_repeats_exercise = "repeats";
+    // EXERCISE TABLE <id, name>
+    private static final String key_train_id = "train_id";
 
-    // COUNT REPEAT TABLE
-    private static final String key_id_repeat = "_id";
+    // APPROACH TABLE <id>
+    private static final String key_exercise_id = "exercise_id";
+
+    // REPEAT TABLE <id>
+    private static final String key_count = "count";
     private static final String key_weight = "weight";
-
-
+    private static final String key_type = "type";
+    private static final String key_approach_id = "approach_id";
 
     DBHelper(Context context) {
         //noinspection deprecation
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
     }
 
-    // Called when the database connection is being configured.
-    // Configure database settings for things like foreign key support, write-ahead logging, etc.
     @Override
     public void onConfigure(SQLiteDatabase db) {
         super.onConfigure(db);
@@ -55,26 +57,41 @@ public class DBHelper extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase db) {
-        db.execSQL("create table if not exists " + TABLE_EXERCISE + " ("
-            + key_id_exercise + " integer primary key autoincrement," + key_name_exercise +
-                " text," + key_approach_exercise + " text )");
+        db.execSQL("create table if not exists " + TABLE_TRAINING +
+                " (" +
+                key_id + " integer primary key autoincrement," +
+                key_name + " varchar(50)," +
+                key_day_week + " integer" +
+                " )");
 
-        db.execSQL("create table if not exists " + TABLE_TRAINING + " ("
-                + key_id_train + " integer primary key autoincrement," + key_name_train + " text,"
-                + key_keys_exercise + " text," + key_week_day + " integer )");
+        db.execSQL("create table if not exists " + TABLE_EXERCISE +
+                " (" +
+                key_id + " integer primary key autoincrement," +
+                key_name + " varchar(50)," +
+                key_train_id + " integer" +
+                " )");
 
-        db.execSQL("create table if not exists " + TABLE_APPROACH + " ("
-                + key_id_approach + " integer primary key autoincrement," + key_repeats_exercise + " text )");
+        db.execSQL("create table if not exists " + TABLE_APPROACH +
+                " (" +
+                key_id + " integer primary key autoincrement," +
+                key_exercise_id + " integer" +
+                " )");
 
-        db.execSQL("create table if not exists " + TABLE_REPEAT + " ("
-                + key_id_repeat + " integer primary key autoincrement," + key_weight + " integer )");
+        db.execSQL("create table if not exists " + TABLE_REPEAT +
+                " (" +
+                key_id + " integer primary key autoincrement," +
+                key_count + " integer," +
+                key_weight + " real," +
+                key_type + " varchar(5)," +
+                key_approach_id + " integer" +
+                " )");
 
     }
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         if (oldVersion != newVersion) {
-            String[] tables = {TABLE_EXERCISE, TABLE_TRAINING, TABLE_APPROACH, TABLE_REPEAT};
+            String[] tables = {TABLE_TRAINING, TABLE_EXERCISE, TABLE_APPROACH, TABLE_REPEAT};
             for (String table : tables) {
                 db.execSQL("drop table if exists " + table);
             }
@@ -82,88 +99,20 @@ public class DBHelper extends SQLiteOpenHelper {
         }
     }
 
-    void addExercise(ExerciseTable exerciseTable) {
-        SQLiteDatabase db = this.getWritableDatabase();
-
-        db.beginTransaction();
-        try {
-            ContentValues values = new ContentValues();
-            values.put(key_name_exercise, exerciseTable.getName());
-            values.put(key_approach_exercise, exerciseTable.getApproachesString());
-
-            db.insertOrThrow(TABLE_EXERCISE, null, values);
-            db.setTransactionSuccessful();
-        } catch (Exception e) {
-            Log.d("[ERROR-DB]: ", "Error while trying add exercise to database");
-        } finally {
-            db.endTransaction();
-        }
-    }
-
-    long getCountExercise () {
-        String query = "SELECT COUNT(*) FROM " + TABLE_EXERCISE;
-
-        SQLiteDatabase db = this.getWritableDatabase();
-        Cursor cursor = db.rawQuery(query, null);
-
-        if (cursor == null || !cursor.moveToFirst()){
-            return 0;
-        }
-        long count = cursor.getInt(0);
-        cursor.close();
-        return count;
-    }
-
-    ExerciseTable getExerciseById(int id) {
-        String query = "SELECT * FROM " + TABLE_EXERCISE + " WHERE " +key_id_exercise + "=" + id;
-
-        SQLiteDatabase db = this.getWritableDatabase();
-        Cursor cursor = db.rawQuery(query, null);
-
-        if (cursor == null || !cursor.moveToFirst()) {
-            return null;
-        }
-        ExerciseTable et = new ExerciseTable(cursor.getInt(0),
-                cursor.getString(1), cursor.getString(2));
-        cursor.close();
-        return et;
-    }
-
-    ArrayList<ExerciseTable> getAllExercise() {
-        ArrayList<ExerciseTable> contactList = new ArrayList<>();
-        String selectQuery = "SELECT  * FROM " + TABLE_EXERCISE;
-
-        SQLiteDatabase db = this.getWritableDatabase();
-        Cursor cursor = db.rawQuery(selectQuery, null);
-
-        if (cursor != null && cursor.moveToFirst()) {
-            do {
-                Log.d("[ERROR-DB]", "id: " + cursor.getInt(0) +
-                    ", name: " + cursor.getString(1) +
-                    ", appr: " + cursor.getString(2) +".");
-
-                contactList.add(new ExerciseTable(cursor.getInt(0), cursor.getString(1),
-                        cursor.getString(2)));
-            } while (cursor.moveToNext());
-            cursor.close();
-        }
-        return contactList;
-    }
-
+    // TRAIN IMPLEMENTATION
     void addTrain(TrainTable trainTable){
         SQLiteDatabase db = this.getWritableDatabase();
 
         db.beginTransaction();
         try {
             ContentValues values = new ContentValues();
-            values.put(key_name_train, trainTable.getName());
-            values.put(key_keys_exercise, trainTable.getExercisesString());
-            values.put(key_week_day, trainTable.getDayWeek());
+            values.put(key_name, trainTable.getName());
+            values.put(key_day_week, trainTable.getDayWeek());
 
             db.insertOrThrow(TABLE_TRAINING, null, values);
             db.setTransactionSuccessful();
         } catch (Exception e) {
-            Log.d("[ERROR-DB]: ", "Error while trying add training to database");
+            Log.d(TAG, "Error while trying add train to database");
         } finally {
             db.endTransaction();
         }
@@ -171,46 +120,304 @@ public class DBHelper extends SQLiteOpenHelper {
 
     long getCountTrain () {
         String query = "SELECT COUNT(*) FROM " + TABLE_TRAINING;
+        long count = 0;
 
         SQLiteDatabase db = this.getWritableDatabase();
         Cursor cursor = db.rawQuery(query, null);
-
-        if (cursor == null || !cursor.moveToFirst()){
-            return 0;
+        try {
+            count = cursor.getInt(0);
+        } catch (Exception e) {
+            Log.d(TAG, "Error while trying get all train with database");
+        } finally {
+            if (cursor != null && !cursor.isClosed()) {
+                cursor.close();
+            }
         }
-        long count = cursor.getInt(0);
-        cursor.close();
         return count;
     }
 
-    TrainTable getTrainById(int id) {
-        String query = "SELECT * FROM " + TABLE_TRAINING + " WHERE " +key_id_train + "=" + id;
+    TrainTable getTrainById(long id) {
+        String query = "SELECT * FROM " + TABLE_TRAINING + " WHERE " + key_id + "=" + id;
+        TrainTable trainTable = null;
+
+        SQLiteDatabase db = this.getWritableDatabase();
+        Cursor cursor = db.rawQuery(query, null);
+        try {
+            if (cursor == null || !cursor.moveToFirst()) {
+                return null;
+            }
+            trainTable = new TrainTable(cursor.getInt(0), cursor.getString(1),
+                    cursor.getInt(2), null);
+        } catch (Exception e) {
+            Log.d(TAG, "Error while trying get by id TrainTable with database");
+        } finally {
+            if (cursor != null && !cursor.isClosed()){
+                cursor.close();
+            }
+        }
+        return trainTable;
+    }
+
+    ArrayList<TrainTable> getAllTrain() {
+        String selectQuery = "SELECT  * FROM " + TABLE_TRAINING;
+        ArrayList<TrainTable> contactList = new ArrayList<>();
+
+        SQLiteDatabase db = this.getWritableDatabase();
+        Cursor cursor = db.rawQuery(selectQuery, null);
+        try {
+            if (cursor.moveToFirst()) {
+                do {
+                    contactList.add(new TrainTable(cursor.getInt(0),
+                            cursor.getString(1), cursor.getInt(2),
+                            null));
+                } while (cursor.moveToNext());
+            }
+        } catch (Exception e) {
+            Log.d(TAG, "Error while trying all TrainTable with database");
+        } finally {
+            if (cursor != null && !cursor.isClosed()){
+                cursor.close();
+            }
+        }
+        return contactList;
+    }
+
+    // EXERCISE IMPLEMENTATION
+    void addExercise(ExerciseTable exerciseTable) {
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        db.beginTransaction();
+        try {
+            ContentValues values = new ContentValues();
+            values.put(key_name, exerciseTable.getName());
+            values.put(key_train_id, exerciseTable.getTrainId());
+
+            db.insertOrThrow(TABLE_EXERCISE, null, values);
+            db.setTransactionSuccessful();
+        } catch (Exception e) {
+            Log.d(TAG, "Error while trying add exercise to database");
+        } finally {
+            db.endTransaction();
+        }
+    }
+
+    long getCountExercise () {
+        String query = "SELECT COUNT(*) FROM " + TABLE_EXERCISE;
+        long count = 0;
 
         SQLiteDatabase db = this.getWritableDatabase();
         Cursor cursor = db.rawQuery(query, null);
 
-        if (cursor == null || !cursor.moveToFirst()) {
-            return null;
+        try {
+            count = cursor.getInt(0);
+        } catch (Exception e) {
+            Log.d(TAG,"Error while trying get count exercise to database");
+        } finally {
+            if (cursor != null && !cursor.isClosed()) {
+                cursor.close();
+            }
         }
-        TrainTable tt = new TrainTable(cursor.getInt(0), cursor.getString(1),
-                cursor.getString(2), cursor.getInt(3));
-        cursor.close();
-        return tt;
+        return count;
     }
 
-    ArrayList<TrainTable> getAllTrain() {
-        ArrayList<TrainTable> contactList = new ArrayList<>();
-        String selectQuery = "SELECT  * FROM " + TABLE_TRAINING;
+    ExerciseTable getExerciseById(long id) {
+        String query = "SELECT * FROM " + TABLE_EXERCISE + " WHERE " +key_id + "=" + id;
+        ExerciseTable exerciseTable = null;
+
+        SQLiteDatabase db = this.getWritableDatabase();
+        Cursor cursor = db.rawQuery(query, null);
+
+        try {
+            exerciseTable = new ExerciseTable(cursor.getInt(0),
+                    cursor.getString(1), null, cursor.getInt(2));
+        } catch (Exception e) {
+            Log.d(TAG, "Error while trying get exercise by id with database");
+        } finally {
+            if (cursor != null && !cursor.isClosed()){
+                cursor.close();
+            }
+        }
+        return exerciseTable;
+    }
+
+    ArrayList<ExerciseTable> getAllExercise() {
+        String selectQuery = "SELECT  * FROM " + TABLE_EXERCISE;
+        ArrayList<ExerciseTable> contactList = new ArrayList<>();
 
         SQLiteDatabase db = this.getWritableDatabase();
         Cursor cursor = db.rawQuery(selectQuery, null);
 
-        if (cursor != null && cursor.moveToFirst()) {
-            do {
-                contactList.add(new TrainTable(cursor.getInt(0), cursor.getString(1),
-                        cursor.getString(2), cursor.getInt(3)));
-            } while (cursor.moveToNext());
-            cursor.close();
+        try {
+            if (cursor.moveToFirst()) {
+                do {
+                    contactList.add(new ExerciseTable(cursor.getInt(0),
+                            cursor.getString(1), null, cursor.getInt(2)));
+                } while (cursor.moveToNext());
+            }
+        } catch (Exception e) {
+            Log.d(TAG, "while while trying get all ExerciseTable with database");
+        } finally {
+            if (cursor != null && !cursor.isClosed()) {
+                cursor.close();
+            }
+        }
+        return contactList;
+    }
+
+    ArrayList<ExerciseTable> getAllExerciseByTrainId (long trainId) {
+        String selectQuery = "SELECT * FROM " + TABLE_EXERCISE +
+                " WHERE " + key_train_id + "=" + trainId;
+        ArrayList<ExerciseTable> contactList = new ArrayList<>();
+
+        SQLiteDatabase db = this.getWritableDatabase();
+        Cursor cursor = db.rawQuery(selectQuery, null);
+
+        try {
+            if (cursor.moveToFirst()) {
+                do {
+                    contactList.add(new ExerciseTable(cursor.getInt(0),
+                            cursor.getString(1), null, cursor.getInt(2)));
+                } while (cursor.moveToNext());
+            }
+        } catch (Exception e) {
+            Log.d(TAG, "while while trying get all ExerciseTable with database");
+        } finally {
+            if (cursor != null && !cursor.isClosed()) {
+                cursor.close();
+            }
+        }
+        return contactList;
+    }
+
+    // APPROACH IMPLEMENTATION
+    void addApproach(ApproachTable approachTable) {
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        db.beginTransaction();
+        try {
+            ContentValues values = new ContentValues();
+            values.put(key_exercise_id, approachTable.getExerciseId());
+
+            db.insertOrThrow(TABLE_APPROACH, null, values);
+            db.setTransactionSuccessful();
+        } catch (Exception e) {
+            Log.d(TAG, "Error while trying add approach to database");
+        } finally {
+            db.endTransaction();
+        }
+    }
+
+    ApproachTable getApproachById(long id) {
+        String query = "SELECT * FROM " + TABLE_APPROACH +
+                " WHERE " + key_id + "=" + id;
+        ApproachTable approachTable = null;
+
+        SQLiteDatabase db = this.getWritableDatabase();
+        Cursor cursor = db.rawQuery(query, null);
+
+        try {
+            approachTable = new ApproachTable(cursor.getInt(0),null,
+                    cursor.getInt(1));
+        } catch (Exception e) {
+            Log.d(TAG, "Error while trying get approach by id with database");
+        } finally {
+            if (cursor != null && !cursor.isClosed()){
+                cursor.close();
+            }
+        }
+        return approachTable;
+    }
+
+    ArrayList<ApproachTable> getAllApproachByExerciseId(long exerciseId) {
+        String selectQuery = "SELECT  * FROM " + TABLE_APPROACH +
+                " WHERE " + key_exercise_id + "=" + exerciseId;
+        ArrayList<ApproachTable> contactList = new ArrayList<>();
+
+        SQLiteDatabase db = this.getWritableDatabase();
+        Cursor cursor = db.rawQuery(selectQuery, null);
+
+        try {
+            if (cursor.moveToFirst()) {
+                do {
+                    contactList.add(new ApproachTable(cursor.getInt(0), null,
+                            cursor.getInt(1)));
+                } while (cursor.moveToNext());
+            }
+        } catch (Exception e) {
+            Log.d(TAG, "while while trying get all ExerciseTable with database");
+        } finally {
+            if (cursor != null && !cursor.isClosed()) {
+                cursor.close();
+            }
+        }
+        return contactList;
+    }
+
+    // REPEAT IMPLEMENTATION
+    void addRepeat(RepeatTable repeatTable) {
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        db.beginTransaction();
+        try {
+            ContentValues values = new ContentValues();
+            values.put(key_count, repeatTable.getCount());
+            values.put(key_weight, repeatTable.getWeight());
+            values.put(key_type, repeatTable.getType());
+            values.put(key_approach_id, repeatTable.getApproachId());
+
+            db.insertOrThrow(TABLE_REPEAT, null, values);
+            db.setTransactionSuccessful();
+        } catch (Exception e) {
+            Log.d(TAG, "Error while trying add repeat to database");
+        } finally {
+            db.endTransaction();
+        }
+    }
+
+    RepeatTable getRepeatById(int id) {
+        String query = "SELECT * FROM " + TABLE_REPEAT + " WHERE " + key_id + "=" + id;
+        RepeatTable repeatTable = null;
+
+        SQLiteDatabase db = this.getWritableDatabase();
+        Cursor cursor = db.rawQuery(query, null);
+
+        try {
+            repeatTable = new RepeatTable(cursor.getInt(0), cursor.getInt(1),
+                    Double.parseDouble(cursor.getString(2)),
+                    cursor.getString(3), cursor.getInt(4));
+        } catch (Exception e) {
+            Log.d(TAG, "Error while trying get approach by id with database");
+        } finally {
+            if (cursor != null && !cursor.isClosed()){
+                cursor.close();
+            }
+        }
+        return repeatTable;
+    }
+
+    ArrayList<RepeatTable> getAllRepeatByApproachId(long approachId) {
+        String selectQuery = "SELECT  * FROM " + TABLE_REPEAT +
+                " WHERE " + key_approach_id + "=" + approachId;
+        ArrayList<RepeatTable> contactList = new ArrayList<>();
+
+        SQLiteDatabase db = this.getWritableDatabase();
+        Cursor cursor = db.rawQuery(selectQuery, null);
+
+        try {
+            if (cursor.moveToFirst()) {
+                do {
+                    contactList.add(new RepeatTable(cursor.getInt(0),
+                            cursor.getInt(1),
+                            Double.parseDouble(cursor.getString(2)),
+                            cursor.getString(3), cursor.getInt(4)));
+                } while (cursor.moveToNext());
+            }
+        } catch (Exception e) {
+            Log.d(TAG, "while while trying get all ExerciseTable with database");
+        } finally {
+            if (cursor != null && !cursor.isClosed()) {
+                cursor.close();
+            }
         }
         return contactList;
     }

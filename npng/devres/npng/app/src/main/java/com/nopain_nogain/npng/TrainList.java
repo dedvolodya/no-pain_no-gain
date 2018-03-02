@@ -12,6 +12,9 @@ import android.widget.Button;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import com.nopain_nogain.npng.dbtables.ExerciseTable;
+import com.nopain_nogain.npng.dbtables.TrainTable;
+
 import java.util.ArrayList;
 
 
@@ -53,7 +56,7 @@ public class TrainList extends Activity {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
                 tmpLst += "id: " + adapterView +", ";
-
+                adapter.getItem(position).getId();
             }
         });
 

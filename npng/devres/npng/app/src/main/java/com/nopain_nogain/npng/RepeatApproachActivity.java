@@ -3,14 +3,13 @@ package com.nopain_nogain.npng;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
+
+import com.nopain_nogain.npng.dbtables.ExerciseTable;
 
 import java.util.ArrayList;
 
