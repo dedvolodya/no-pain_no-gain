@@ -63,7 +63,7 @@ public class TrainList extends Activity {
                 SparseBooleanArray sparseBooleanArray = myList.getCheckedItemPositions();
                 if (sparseBooleanArray.get(position)) {
                     exerciseId.add(new ExerciseTable(adapter.getItem(position).getId(),
-                            null, null, -1));
+                            adapter.getItem(position).getName(), null, -1));
                 } else {
                     exerciseId.removeIf((el) -> el.getId() == adapter.getItem(position).getId());
                 }

@@ -23,7 +23,7 @@ public class CalendarActivity extends AppCompatActivity {
                 String selectedDate = String.valueOf(month + 1) +
                         "-" + day + "-" + year + " ";
                 Toast.makeText(getApplicationContext(), selectedDate, Toast.LENGTH_LONG).show();
-                Intent intent1 = new Intent(getApplicationContext(), CreateExercise.class);
+                Intent intent1 = new Intent(getApplicationContext(), ShowTrainByDateActivity.class);
                 startActivity(intent1);
 
             }

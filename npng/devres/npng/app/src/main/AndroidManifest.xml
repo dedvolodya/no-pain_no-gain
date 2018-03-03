@@ -21,14 +21,55 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".CalendarActivity"/>
-        <activity android:name=".MainActivity"/>
-        <activity android:name=".CreateExercise"/>
-        <activity android:name=".CreateTrain"/>
-        <activity android:name=".TrainList"/>
-        <activity android:name=".RepeatApproachActivity"/>
-        <activity android:name=".RepeatWeightActivity"/>
-        <activity android:name=".AddExerciseActivity"/>
+        <activity
+            android:name=".CalendarActivity"
+            android:theme="@style/AppTheme"
+            android:label="@string/app_name"/>
+
+        <activity
+            android:name=".MainActivity"
+            android:theme="@style/AppTheme"
+            android:label="@string/app_name"/>
+
+        <activity
+            android:name=".CreateExercise"
+            android:theme="@style/AppTheme"
+            android:label="@string/app_name"/>
+
+        <activity
+            android:name=".CreateTrain"
+            android:theme="@style/AppTheme"
+            android:label="@string/app_name"/>
+
+        <activity
+            android:name=".TrainList"
+            android:theme="@style/AppTheme"
+            android:label="@string/app_name"/>
+
+        <activity
+            android:name=".RepeatApproachActivity"
+            android:theme="@style/AppTheme"
+            android:label="@string/app_name"/>
+
+        <activity
+            android:name=".RepeatWeightActivity"
+            android:theme="@style/AppTheme"
+            android:label="@string/app_name"/>
+
+        <activity
+            android:name=".AddExerciseActivity"
+            android:theme="@style/AppTheme"
+            android:label="@string/app_name"/>
+
+        <activity
+            android:name=".ViewExerciseFromTrainActivity"
+            android:theme="@style/AppTheme"
+            android:label="@string/app_name"/>
+
+        <activity
+            android:name=".ShowTrainByDateActivity"
+            android:theme="@style/AppTheme"
+            android:label="@string/app_name"/>
 
 
     </application>

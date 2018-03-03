@@ -129,7 +129,7 @@ public class DBHelper extends SQLiteOpenHelper {
         try {
             count = cursor.getInt(0);
         } catch (Exception e) {
-            Log.d(TAG, "Error while trying get all train with database");
+            Log.d(TAG, "Error while trying get all train from database");
         } finally {
             if (cursor != null && !cursor.isClosed()) {
                 cursor.close();
@@ -151,7 +151,7 @@ public class DBHelper extends SQLiteOpenHelper {
             trainTable = new TrainTable(cursor.getInt(0), cursor.getString(1),
                     cursor.getInt(2), null);
         } catch (Exception e) {
-            Log.d(TAG, "Error while trying get by id TrainTable with database");
+            Log.d(TAG, "Error while trying get by id TrainTable from database");
         } finally {
             if (cursor != null && !cursor.isClosed()){
                 cursor.close();
@@ -175,7 +175,7 @@ public class DBHelper extends SQLiteOpenHelper {
                 } while (cursor.moveToNext());
             }
         } catch (Exception e) {
-            Log.d(TAG, "Error while trying all TrainTable with database");
+            Log.d(TAG, "Error while trying all TrainTable from database");
         } finally {
             if (cursor != null && !cursor.isClosed()){
                 cursor.close();
@@ -225,7 +225,8 @@ public class DBHelper extends SQLiteOpenHelper {
     }
 
     ExerciseTable getExerciseById(long id) {
-        String query = "SELECT * FROM " + TABLE_EXERCISE + " WHERE " +key_id + "=" + id;
+        String query = "SELECT * FROM " + TABLE_EXERCISE +
+                " WHERE " + key_id + "=" + id;
         ExerciseTable exerciseTable = null;
 
         SQLiteDatabase db = this.getWritableDatabase();
@@ -237,7 +238,7 @@ public class DBHelper extends SQLiteOpenHelper {
             exerciseTable = new ExerciseTable(cursor.getInt(0),
                     cursor.getString(1), null, cursor.getInt(2));
         } catch (Exception e) {
-            Log.d(TAG, "Error while trying get exercise by id with database");
+            Log.d(TAG, "Error while trying get exercise by id from database");
         } finally {
             if (cursor != null && !cursor.isClosed()){
                 cursor.close();
@@ -247,7 +248,8 @@ public class DBHelper extends SQLiteOpenHelper {
     }
 
     ArrayList<ExerciseTable> getAllExercise() {
-        String selectQuery = "SELECT  * FROM " + TABLE_EXERCISE;
+        String selectQuery = "SELECT  * FROM " + TABLE_EXERCISE +
+                " WHERE " + key_train_id + "=-1";
         ArrayList<ExerciseTable> contactList = new ArrayList<>();
 
         SQLiteDatabase db = this.getWritableDatabase();
@@ -261,7 +263,7 @@ public class DBHelper extends SQLiteOpenHelper {
                 } while (cursor.moveToNext());
             }
         } catch (Exception e) {
-            Log.d(TAG, "while while trying get all ExerciseTable with database");
+            Log.d(TAG, "Error while trying get all ExerciseTable from database");
         } finally {
             if (cursor != null && !cursor.isClosed()) {
                 cursor.close();
@@ -286,7 +288,7 @@ public class DBHelper extends SQLiteOpenHelper {
                 } while (cursor.moveToNext());
             }
         } catch (Exception e) {
-            Log.d(TAG, "while while trying get all ExerciseTable with database");
+            Log.d(TAG, "while while trying get all ExerciseTable from database");
         } finally {
             if (cursor != null && !cursor.isClosed()) {
                 cursor.close();
@@ -328,7 +330,7 @@ public class DBHelper extends SQLiteOpenHelper {
             approachTable = new ApproachTable(cursor.getInt(0),null,
                     cursor.getInt(1));
         } catch (Exception e) {
-            Log.d(TAG, "Error while trying get approach by id with database");
+            Log.d(TAG, "Error while trying get approach by id from database");
         } finally {
             if (cursor != null && !cursor.isClosed()){
                 cursor.close();
@@ -353,7 +355,7 @@ public class DBHelper extends SQLiteOpenHelper {
                 } while (cursor.moveToNext());
             }
         } catch (Exception e) {
-            Log.d(TAG, "while while trying get all ExerciseTable with database");
+            Log.d(TAG, "while while trying get all ExerciseTable from database");
         } finally {
             if (cursor != null && !cursor.isClosed()) {
                 cursor.close();
@@ -398,7 +400,7 @@ public class DBHelper extends SQLiteOpenHelper {
                     Double.parseDouble(cursor.getString(2)),
                     cursor.getString(3), cursor.getInt(4));
         } catch (Exception e) {
-            Log.d(TAG, "Error while trying get approach by id with database");
+            Log.d(TAG, "Error while trying get approach by id from database");
         } finally {
             if (cursor != null && !cursor.isClosed()){
                 cursor.close();
@@ -425,7 +427,7 @@ public class DBHelper extends SQLiteOpenHelper {
                 } while (cursor.moveToNext());
             }
         } catch (Exception e) {
-            Log.d(TAG, "while while trying get all ExerciseTable with database");
+            Log.d(TAG, "while while trying get all ExerciseTable from database");
         } finally {
             if (cursor != null && !cursor.isClosed()) {
                 cursor.close();
