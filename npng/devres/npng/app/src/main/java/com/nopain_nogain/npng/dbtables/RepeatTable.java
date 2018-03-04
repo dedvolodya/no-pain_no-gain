@@ -12,7 +12,7 @@ public class RepeatTable {
         this.count = count;
         this.weight = weight;
         this.type = "Kg";
-        if (type != null && (type.equals("Kg") || type.equals("sec"))) {
+        if (type != null && (type.equals("Kg") || type.equals("sec") || type.equals("Km"))) {
             this.type = type;
         }
         this.approach_id = approach_id;

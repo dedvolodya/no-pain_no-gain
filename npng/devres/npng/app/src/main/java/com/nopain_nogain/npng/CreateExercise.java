@@ -35,6 +35,21 @@ public class CreateExercise extends AppCompatActivity{
 
         ArrayList<ExerciseTable> table = db.getAllExercise();
 
+
+        if(db.getCountExercise() == 0) {
+            String[] exercises = {"Barbell Full Squat", "Barbell Walking Lunge",
+                    "Wide-Grip Standing Barbell Curl", "Hammer Curls", "Pullups",
+                    "Close-Grip Front Lat Pulldown", "Smith Machine Calf Raise",
+                    "Plank", "Cocoons", "Pushups", "Cocoons", "Barbell Bench Press - Medium Grip",
+                    "Dumbbell Bench Press", "Dips", "Close-Grip Barbell Bench Press",
+                    "Seated Triceps Press", "Side Laterals to Front Raise",
+                    "Standing Palm-In One-Arm Dumbbell Press"};
+
+            for (String ex : exercises) {
+                db.addExercise(new ExerciseTable(0, ex, null, -1));
+            }
+        }
+
         adapter = new ArrayAdapter<>(this,
                 R.layout.item_exercise_train,R.id.nameExercise, table);
 

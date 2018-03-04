@@ -7,36 +7,80 @@
     android:background="@android:color/darker_gray"
     >
 
-    <Button
-        android:id="@+id/button"
-        android:layout_width="56dp"
-        android:layout_height="56dp"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        android:background="@drawable/calendar_icon"
-        android:onClick="onClickCalendar"
-        tools:layout_editor_absoluteX="56dp"
-        tools:layout_editor_absoluteY="56dp" />
-
-    <Button
-        android:id="@+id/button4"
-        android:layout_width="56dp"
-        android:layout_height="56dp"
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="76dp"
         android:layout_alignParentBottom="true"
         android:layout_alignParentStart="true"
-        android:layout_marginStart="28dp"
-        android:background="@drawable/exercise_icon"
-        android:onClick="onClickAdding" />
+        android:background="#7b7b7b">
 
-    <Button
-        android:id="@+id/button5"
-        android:layout_width="56dp"
-        android:layout_height="56dp"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentEnd="true"
-        android:layout_marginEnd="18dp"
-        android:background="@drawable/train_icon"
-        android:onClick="onClickTrain" />
+        <Button
+            android:id="@+id/button"
+            android:layout_width="56dp"
+            android:layout_height="56dp"
+            android:layout_above="@+id/textView2"
+            android:layout_centerHorizontal="true"
+            android:background="@drawable/calendar_icon"
+            android:onClick="onClickCalendar"
+            tools:layout_editor_absoluteX="56dp"
+            tools:layout_editor_absoluteY="56dp" />
 
+        <Button
+            android:id="@+id/button4"
+            android:layout_width="56dp"
+            android:layout_height="56dp"
+            android:layout_above="@+id/textView"
+            android:layout_alignParentStart="true"
+            android:layout_marginStart="28dp"
+            android:background="@drawable/exercise_icon"
+            android:onClick="onClickAdding" />
+
+        <Button
+            android:id="@+id/button5"
+            android:layout_width="56dp"
+            android:layout_height="56dp"
+            android:layout_above="@+id/textView3"
+            android:layout_alignParentEnd="true"
+            android:layout_marginEnd="18dp"
+            android:background="@drawable/train_icon"
+            android:onClick="onClickTrain" />
+
+        <TextView
+            android:id="@+id/textView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_alignStart="@+id/button4"
+            android:text="Exercises"
+            android:textStyle="bold|italic" />
+
+        <TextView
+            android:id="@+id/textView2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignEnd="@+id/button"
+            android:layout_alignParentBottom="true"
+            android:text="Calendar"
+            android:textStyle="bold|italic" />
+
+        <TextView
+            android:id="@+id/textView3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBaseline="@+id/textView2"
+            android:layout_alignBottom="@+id/textView2"
+            android:layout_alignStart="@+id/button5"
+            android:text="Trainings"
+            android:textStyle="bold|italic" />
+    </RelativeLayout>
+
+    <TextView
+        android:id="@+id/quoteText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="62dp"
+        android:text="" />
 
 </RelativeLayout>

@@ -20,7 +20,7 @@
         android:inputType="phone"/>
 
     <Spinner
-        android:id="@+id/KgSecSpiner"
+        android:id="@+id/typeWeight"
         android:layout_width="1dp"
         android:layout_height="wrap_content"
         android:layout_weight="3"
@@ -34,7 +34,7 @@
         android:layout_height="40dp"
         android:layout_weight="1"
         android:background="@android:drawable/ic_delete"
-        android:onClick="onDelete"
+        android:onClick="onDeleteField"
        />
 
 

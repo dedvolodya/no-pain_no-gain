@@ -419,6 +419,7 @@ public class DBHelper extends SQLiteOpenHelper {
             values.put(key_type, repeatTable.getType());
             values.put(key_approach_id, repeatTable.getApproachId());
 
+
             id = db.insertOrThrow(TABLE_REPEAT, null, values);
             db.setTransactionSuccessful();
         } catch (Exception e) {

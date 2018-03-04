@@ -1,11 +1,9 @@
 package com.nopain_nogain.npng;
 
 
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.util.SparseBooleanArray;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -43,7 +41,6 @@ public class RepeatApproachActivity extends AppCompatActivity {
         myList.setAdapter(adapter);
 
         myList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
                 SparseBooleanArray sparseBooleanArray = myList.getCheckedItemPositions();
@@ -73,8 +70,8 @@ public class RepeatApproachActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    public void onClickTest(View v){
-        Intent intent8 = new Intent(getApplicationContext(),RepeatWeightActivity.class);
+    public void OnClickAddExercisesToTrain (View v) {
+        Intent intent8 = new Intent(getApplicationContext(),CreateTrain.class);
         startActivity(intent8);
     }
 }
