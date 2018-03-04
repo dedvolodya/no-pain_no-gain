@@ -4,6 +4,7 @@ package com.nopain_nogain.npng;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.util.SparseBooleanArray;
 import android.view.View;
@@ -15,7 +16,7 @@ import com.nopain_nogain.npng.dbtables.ExerciseTable;
 
 import java.util.ArrayList;
 
-public class RepeatApproachActivity extends Activity{
+public class RepeatApproachActivity extends AppCompatActivity {
     ListView myList;
     ArrayAdapter<ExerciseTable> adapter;
 

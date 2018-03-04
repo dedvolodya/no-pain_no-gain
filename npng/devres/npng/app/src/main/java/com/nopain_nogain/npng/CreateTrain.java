@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AlertDialog;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.util.SparseBooleanArray;
 import android.view.Menu;
@@ -22,7 +23,7 @@ import com.nopain_nogain.npng.dbtables.TrainTable;
 import java.util.ArrayList;
 
 
-public class CreateTrain extends Activity {
+public class CreateTrain extends AppCompatActivity {
     ArrayList<TrainTable> trainTable;
     TextView textView;
     @Override

@@ -184,6 +184,20 @@ public class DBHelper extends SQLiteOpenHelper {
         return contactList;
     }
 
+    public long deleteTrain (long id) {
+        SQLiteDatabase db = getWritableDatabase();
+        db.beginTransaction();
+        try {
+            db.delete(TABLE_TRAINING, key_id + "=" + id, null);
+            db.setTransactionSuccessful();
+        } catch (Exception e) {
+            Log.d(TAG, "Error while trying to delete train from database");
+        } finally {
+            db.endTransaction();
+        }
+        return id;
+    }
+
     // EXERCISE IMPLEMENTATION
     long  addExercise(ExerciseTable exerciseTable) {
         SQLiteDatabase db = this.getWritableDatabase();
@@ -297,6 +311,20 @@ public class DBHelper extends SQLiteOpenHelper {
         return contactList;
     }
 
+    public long deleteExercise (long id) {
+        SQLiteDatabase db = getWritableDatabase();
+        db.beginTransaction();
+        try {
+            db.delete(TABLE_EXERCISE, key_id + "=" + id, null);
+            db.setTransactionSuccessful();
+        } catch (Exception e) {
+            Log.d(TAG, "Error while trying to delete exercise from database");
+        } finally {
+            db.endTransaction();
+        }
+        return id;
+    }
+
     // APPROACH IMPLEMENTATION
     long addApproach(ApproachTable approachTable) {
         SQLiteDatabase db = this.getWritableDatabase();
@@ -362,6 +390,20 @@ public class DBHelper extends SQLiteOpenHelper {
             }
         }
         return contactList;
+    }
+
+    public long deleteApprpach (long id) {
+        SQLiteDatabase db = getWritableDatabase();
+        db.beginTransaction();
+        try {
+            db.delete(TABLE_APPROACH, key_id + "=" + id, null);
+            db.setTransactionSuccessful();
+        } catch (Exception e) {
+            Log.d(TAG, "Error while trying to delete approach from database");
+        } finally {
+            db.endTransaction();
+        }
+        return id;
     }
 
     // REPEAT IMPLEMENTATION
@@ -434,5 +476,19 @@ public class DBHelper extends SQLiteOpenHelper {
             }
         }
         return contactList;
+    }
+
+    public long deleteRepeat (long id) {
+        SQLiteDatabase db = getWritableDatabase();
+        db.beginTransaction();
+        try {
+            db.delete(TABLE_REPEAT, key_id + "=" + id, null);
+            db.setTransactionSuccessful();
+        } catch (Exception e) {
+            Log.d(TAG, "Error while trying to delete repeat from database");
+        } finally {
+            db.endTransaction();
+        }
+        return id;
     }
 }

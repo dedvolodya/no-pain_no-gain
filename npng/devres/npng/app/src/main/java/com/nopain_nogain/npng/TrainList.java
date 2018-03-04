@@ -1,11 +1,11 @@
 package com.nopain_nogain.npng;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.annotation.RequiresApi;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.util.SparseBooleanArray;
 import android.view.View;
@@ -20,7 +20,7 @@ import com.nopain_nogain.npng.dbtables.TrainTable;
 import java.util.ArrayList;
 
 
-public class TrainList extends Activity {
+public class TrainList extends AppCompatActivity {
     ListView myList;
     Button getChoice;
     ArrayAdapter<ExerciseTable> adapter = null;
@@ -65,7 +65,12 @@ public class TrainList extends Activity {
                     exerciseId.add(new ExerciseTable(adapter.getItem(position).getId(),
                             adapter.getItem(position).getName(), null, -1));
                 } else {
-                    exerciseId.removeIf((el) -> el.getId() == adapter.getItem(position).getId());
+                    for (ExerciseTable exercise : exerciseId) {
+                        if (exercise.getId() == adapter.getItem(position).getId()){
+                            exerciseId.remove(exercise);
+                            break;
+                        }
+                    }
                 }
             }
         });

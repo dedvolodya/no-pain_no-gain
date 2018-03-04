@@ -3,6 +3,7 @@ package com.nopain_nogain.npng;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
@@ -11,7 +12,7 @@ import com.nopain_nogain.npng.dbtables.ExerciseTable;
 import java.util.ArrayList;
 
 
-public class ViewExerciseFromTrainActivity extends Activity{
+public class ViewExerciseFromTrainActivity extends AppCompatActivity {
     ListView listView;
     DBHelper dbHelper;
     ArrayList<ExerciseTable> table = null;
