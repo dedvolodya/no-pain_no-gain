@@ -1,9 +1,11 @@
 <resources>
-    <string name="app_name">npng</string>
+    <string name="app_name">GymHelper</string>
 
     <string name="spiner">SpinnerStr</string>
         <string-array name="types">
             <item>Kg</item>
             <item>Sec</item>
+            <item>Km</item>
         </string-array>
+
 </resources>

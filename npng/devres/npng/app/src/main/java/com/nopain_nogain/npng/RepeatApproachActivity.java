@@ -1,18 +1,22 @@
 package com.nopain_nogain.npng;
 
 
-import android.app.Activity;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.util.SparseBooleanArray;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.Spinner;
+import android.widget.Toast;
 
 import com.nopain_nogain.npng.dbtables.ExerciseTable;
 
@@ -43,13 +47,14 @@ public class RepeatApproachActivity extends AppCompatActivity {
         myList.setAdapter(adapter);
 
         myList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
                 SparseBooleanArray sparseBooleanArray = myList.getCheckedItemPositions();
                 if (sparseBooleanArray.get(position)) {
+                    //Toast.makeText(this,tr)
                     Intent intent2 = new Intent(getApplicationContext(),RepeatWeightActivity.class);
                     intent2.putExtra("exerciseId",adapter.getItem(position).getId());
+                    intent2.putExtra("trainId", trainId);
                     startActivity(intent2);
                 }
             }
@@ -68,13 +73,18 @@ public class RepeatApproachActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         // TODO Auto-generated method stub
         if (item.getItemId() == R.id.backItem) {
-            finish();
+            Intent intent = new Intent(getApplicationContext(), TrainList.class);
+            startActivity(intent);
         }
         return super.onOptionsItemSelected(item);
     }
 
-    public void onClickTest(View v){
-        Intent intent8 = new Intent(getApplicationContext(),RepeatWeightActivity.class);
+    public void OnClickAddExercisesToTrain (View v) {
+
+
+        Intent intent8 = new Intent(getApplicationContext(), CreateTrain.class);
         startActivity(intent8);
+
     }
+
 }

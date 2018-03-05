@@ -15,7 +15,8 @@
         android:layout_marginStart="69dp"
         android:layout_marginTop="34dp"
         android:ems="10"
-        android:inputType="textPersonName" />
+        android:inputType="textPersonName"
+        android:textStyle="italic"/>
 
     <Button
         android:id="@+id/saveExerciseButton"
@@ -26,5 +27,6 @@
         android:layout_marginStart="62dp"
         android:layout_marginTop="98dp"
         android:onClick="onClickSaveExercise"
-        android:text="Save" />
+        android:text="Save"
+        android:textStyle="italic"/>
 </RelativeLayout>

@@ -34,7 +34,6 @@ public class CreateTrain extends AppCompatActivity {
 
         final DBHelper db = new DBHelper(this);
         trainTable = db.getAllTrain();
-        //db.close();
 
         ListView trainList = findViewById(R.id.TrainList);
         ArrayAdapter<TrainTable> adapter = new ArrayAdapter<>(this,

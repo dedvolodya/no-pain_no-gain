@@ -24,11 +24,8 @@ AndroidStudioProjects.iml
 build/
 .gitignore
 gradle/
-<<<<<<< HEAD
 devres/npng/app/build.gradle
 devres/npng/build.gradle
-=======
->>>>>>> ef59ed000e16e290d92e98abfd890397345fef93
 build.gradle
 .gradle/
 gradle.properties
@@ -45,7 +42,6 @@ test/
 mipmap-hdpi/
 mipmap-mdpi/
 mipmap-xhdpi/
-
 mipmap-xxhdpi/
 mipmap-xxxhdpi/
 drawable-v24/
