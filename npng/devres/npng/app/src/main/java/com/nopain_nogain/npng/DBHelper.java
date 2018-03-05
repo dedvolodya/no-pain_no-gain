@@ -219,7 +219,7 @@ public class DBHelper extends SQLiteOpenHelper {
         return id;
     }
 
-    long getCountExercise () {///////////////////////////////////////////////
+    long getCountExercise () {
         String query = "SELECT COUNT(*) FROM " + TABLE_EXERCISE;
         long count = 0;
 
@@ -231,7 +231,7 @@ public class DBHelper extends SQLiteOpenHelper {
         } catch (Exception e) {
             Log.d(TAG,"Error while trying get count exercise from database");
         } finally {
-            if (cursor != null && !cursor.isClosed()) {
+            if (!cursor.isClosed()) {
                 cursor.close();
             }
         }
@@ -254,7 +254,7 @@ public class DBHelper extends SQLiteOpenHelper {
         } catch (Exception e) {
             Log.d(TAG, "Error while trying get exercise by id from database");
         } finally {
-            if (cursor != null && !cursor.isClosed()){
+            if (!cursor.isClosed()){
                 cursor.close();
             }
         }
@@ -360,11 +360,32 @@ public class DBHelper extends SQLiteOpenHelper {
         } catch (Exception e) {
             Log.d(TAG, "Error while trying get approach by id from database");
         } finally {
-            if (cursor != null && !cursor.isClosed()){
+            if (!cursor.isClosed()){
                 cursor.close();
             }
         }
         return approachTable;
+    }
+
+    long getCountApproach (long exerciseId) {
+        String query = "SELECT COUNT(*) FROM " + TABLE_APPROACH +
+                " WHERE " + key_exercise_id + "=" + exerciseId;
+        long count = 0;
+        Cursor cursor = null;
+        SQLiteDatabase db = this.getWritableDatabase();
+        try {
+            cursor = db.rawQuery(query, null);
+            if (cursor != null && cursor.moveToFirst()) {
+                count = cursor.getInt(0);
+            }
+        } catch (Exception e) {
+            Log.d(TAG,"Error while trying get count approach from database");
+        } finally {
+            if (cursor != null && !cursor.isClosed()) {
+                cursor.close();
+            }
+        }
+        return count;
     }
 
     ArrayList<ApproachTable> getAllApproachByExerciseId(long exerciseId) {
@@ -445,7 +466,7 @@ public class DBHelper extends SQLiteOpenHelper {
         } catch (Exception e) {
             Log.d(TAG, "Error while trying get approach by id from database");
         } finally {
-            if (cursor != null && !cursor.isClosed()){
+            if (!cursor.isClosed()){
                 cursor.close();
             }
         }

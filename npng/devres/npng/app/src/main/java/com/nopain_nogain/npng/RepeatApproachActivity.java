@@ -51,8 +51,10 @@ public class RepeatApproachActivity extends AppCompatActivity {
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
                 SparseBooleanArray sparseBooleanArray = myList.getCheckedItemPositions();
                 if (sparseBooleanArray.get(position)) {
+                    //Toast.makeText(this,tr)
                     Intent intent2 = new Intent(getApplicationContext(),RepeatWeightActivity.class);
                     intent2.putExtra("exerciseId",adapter.getItem(position).getId());
+                    intent2.putExtra("trainId", trainId);
                     startActivity(intent2);
                 }
             }
@@ -71,7 +73,8 @@ public class RepeatApproachActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         // TODO Auto-generated method stub
         if (item.getItemId() == R.id.backItem) {
-            finish();
+            Intent intent = new Intent(getApplicationContext(), TrainList.class);
+            startActivity(intent);
         }
         return super.onOptionsItemSelected(item);
     }

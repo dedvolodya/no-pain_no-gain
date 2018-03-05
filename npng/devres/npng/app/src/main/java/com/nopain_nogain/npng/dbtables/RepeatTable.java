@@ -5,7 +5,7 @@ public class RepeatTable {
     private int count;
     private double weight;
     private String type;
-    private long approach_id;
+    private long approachId;
 
     public RepeatTable (long id, int count, double weight, String type, long approach_id) {
         this.id = id;
@@ -15,7 +15,7 @@ public class RepeatTable {
         if (type != null && (type.equals("Kg") || type.equals("sec") || type.equals("Km"))) {
             this.type = type;
         }
-        this.approach_id = approach_id;
+        this.approachId = approach_id;
     }
 
     public long getId () {
@@ -35,6 +35,10 @@ public class RepeatTable {
     }
 
     public long getApproachId () {
-        return this.approach_id;
+        return this.approachId;
+    }
+
+    public void setApproachId (long approachId) {
+        this.approachId = approachId;
     }
 }
