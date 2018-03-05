@@ -37,13 +37,13 @@ public class CreateExercise extends AppCompatActivity{
 
 
         if(db.getCountExercise() == 0) {
-            String[] exercises = {"Barbell Full Squat", "Barbell Walking Lunge",
-                    "Wide-Grip Standing Barbell Curl", "Hammer Curls", "Pullups",
+            String[] exercises = {"Bench Press", "Barbell Walking Lunge",
+                    "Wide-Grip Standing Barbell Curl", "Hammer Curls",
                     "Close-Grip Front Lat Pulldown", "Smith Machine Calf Raise",
-                    "Plank", "Cocoons", "Pushups", "Cocoons", "Barbell Bench Press - Medium Grip",
+                    "Plank", "Cocoons", "Pushups", "Barbell Bench Press - Medium Grip",
                     "Dumbbell Bench Press", "Dips", "Close-Grip Barbell Bench Press",
                     "Seated Triceps Press", "Side Laterals to Front Raise",
-                    "Standing Palm-In One-Arm Dumbbell Press"};
+                    "Standing Palm-In One-Arm Dumbbell Press", "Snatch"};
 
             for (String ex : exercises) {
                 db.addExercise(new ExerciseTable(0, ex, null, -1));

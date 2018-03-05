@@ -22,6 +22,7 @@
         android:layout_marginLeft="5dp"
         android:layout_marginRight="5dp"
         android:onClick="onAddField"
-        android:text="Add approach" />
+        android:text="Add approach"
+        android:textStyle="italic"/>
 
 </LinearLayout>

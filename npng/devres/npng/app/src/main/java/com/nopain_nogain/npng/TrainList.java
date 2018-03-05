@@ -1,10 +1,12 @@
 package com.nopain_nogain.npng;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.annotation.RequiresApi;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.util.SparseBooleanArray;
@@ -27,6 +29,8 @@ public class TrainList extends AppCompatActivity {
     Button getChoice;
     ArrayAdapter<ExerciseTable> adapter = null;
     ArrayList<ExerciseTable> exerciseId = new ArrayList<>();
+    final String [] daysW =  {"Monday","Tuesday","Wednesday","Thursday","Friday","Saturday","Sunday"};
+    String str = "";
 
 
     @Override
@@ -39,13 +43,13 @@ public class TrainList extends AppCompatActivity {
         getChoice = findViewById(R.id.AcceptTrain);
 
         if(db.getCountExercise() == 0) {
-            String[] exercises = {"Barbell Full Squat", "Barbell Walking Lunge",
-                    "Wide-Grip Standing Barbell Curl", "Hammer Curls", "Pullups",
+            String[] exercises = {"Bench Press", "Barbell Walking Lunge",
+                    "Wide-Grip Standing Barbell Curl", "Hammer Curls",
                     "Close-Grip Front Lat Pulldown", "Smith Machine Calf Raise",
-                    "Plank", "Cocoons", "Pushups", "Cocoons", "Barbell Bench Press - Medium Grip",
+                    "Plank", "Cocoons", "Pushups", "Barbell Bench Press - Medium Grip",
                     "Dumbbell Bench Press", "Dips", "Close-Grip Barbell Bench Press",
                     "Seated Triceps Press", "Side Laterals to Front Raise",
-                    "Standing Palm-In One-Arm Dumbbell Press"};
+                    "Standing Palm-In One-Arm Dumbbell Press", "Snatch"};
 
             for (String ex : exercises) {
                 db.addExercise(new ExerciseTable(0, ex, null, -1));
@@ -84,16 +88,57 @@ public class TrainList extends AppCompatActivity {
                 Intent intent = getIntent();
                 String trainName = intent.getStringExtra("trainName");
 
-                TrainTable trainTable = new TrainTable(0, trainName, -1, exerciseId);
-                long id = db.addTrain(trainTable);
+                AlertDialog.Builder alertDialog = new AlertDialog.Builder(TrainList.this);
+                alertDialog.setTitle("Chose the day for train");
+                alertDialog.setSingleChoiceItems(daysW, -1,new DialogInterface.OnClickListener(){
+                    @Override
+                    public void onClick(DialogInterface dialog, int which){
+                        str = daysW[which];
+                    }
+                });
+                alertDialog.setPositiveButton("DONE", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        int a = -1;
+                        switch (str) {
+                            case "Monday":
+                                a = 1;
+                                break;
+                            case "Tuesday":
+                                a = 2;
+                                break;
+                            case "Wednesday":
+                                a = 3;
+                                break;
+                            case "Thursday":
+                                a = 4;
+                                break;
+                            case "Friday":
+                                a = 5;
+                                break;
+                            case "Saturday":
+                                a = 6;
+                                break;
+                            case "Sunday":
+                                a = 7;
+                                break;
+                        }
 
-                for (ExerciseTable exercise :exerciseId) {
-                    exercise.setTrainId(id);
-                    db.addExercise(exercise);
-                }
-                Intent intent2 = new Intent(getApplicationContext(),RepeatApproachActivity.class);
-                intent2.putExtra("trainId", id);
-                startActivity(intent2);
+                        TrainTable trainTable = new TrainTable(0, trainName, a, exerciseId);
+                        long id = db.addTrain(trainTable);
+
+                        for (ExerciseTable exercise :exerciseId) {
+                            exercise.setTrainId(id);
+                            db.addExercise(exercise);
+                        }
+                        Intent intent2 = new Intent(getApplicationContext(),RepeatApproachActivity.class);
+                        intent2.putExtra("trainId", id);
+                        startActivity(intent2);
+                    }
+                } );
+
+                alertDialog.show();
+
+
            }
         });
         }

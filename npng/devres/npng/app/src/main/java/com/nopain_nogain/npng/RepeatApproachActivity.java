@@ -1,8 +1,10 @@
 package com.nopain_nogain.npng;
 
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.util.SparseBooleanArray;
 import android.view.Menu;
@@ -10,7 +12,11 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.Spinner;
+import android.widget.Toast;
 
 import com.nopain_nogain.npng.dbtables.ExerciseTable;
 
@@ -71,7 +77,11 @@ public class RepeatApproachActivity extends AppCompatActivity {
     }
 
     public void OnClickAddExercisesToTrain (View v) {
-        Intent intent8 = new Intent(getApplicationContext(),CreateTrain.class);
+
+
+        Intent intent8 = new Intent(getApplicationContext(), CreateTrain.class);
         startActivity(intent8);
+
     }
+
 }

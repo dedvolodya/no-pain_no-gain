@@ -14,8 +14,9 @@
         android:id="@+id/add_exercises_to_train"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:onClick=""
-        android:text="Save" />
+        android:onClick="OnClickAddExercisesToTrain"
+        android:text="Save"
+        android:textStyle="italic"/>
 
 
 </LinearLayout>
