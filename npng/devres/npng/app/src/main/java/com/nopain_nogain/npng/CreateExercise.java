@@ -79,7 +79,7 @@ public class CreateExercise extends AppCompatActivity{
         startActivity(intent);
     }
 
-    public void onClickDeleteItem(View v){
+    public void onClickDeleteItem(final View v){
 
         AlertDialog.Builder alertDialog = new AlertDialog.Builder(CreateExercise.this);
         alertDialog.setTitle("Are you sure?");

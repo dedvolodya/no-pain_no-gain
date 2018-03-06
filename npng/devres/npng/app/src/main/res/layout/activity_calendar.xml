@@ -8,8 +8,8 @@
         android:id="@+id/calendarView1"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:selectedWeekBackgroundColor="#fff000"
-        android:weekNumberColor="#f0000f"
-        android:weekSeparatorLineColor="#0fff00" />
+        android:selectedWeekBackgroundColor="#bebdb4"
+        android:weekNumberColor="#5b4a4b"
+        android:weekSeparatorLineColor="#141514" />
 
 </LinearLayout>

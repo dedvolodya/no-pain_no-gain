@@ -24,7 +24,8 @@ public class CalendarActivity extends AppCompatActivity {
             public void onSelectedDayChange(CalendarView cw, int year, int month, int day) {
                 String selectedDate = String.valueOf(month + 1) +
                         "-" + day + "-" + year + " ";
-                Toast.makeText(getApplicationContext(), selectedDate, Toast.LENGTH_LONG).show();
+               int str =  cw.getWeekDayTextAppearance();
+                Toast.makeText(getApplicationContext(), selectedDate + "   " + str, Toast.LENGTH_LONG).show();
                 Intent intent1 = new Intent(getApplicationContext(), ShowTrainByDateActivity.class);
                 startActivity(intent1);
 
