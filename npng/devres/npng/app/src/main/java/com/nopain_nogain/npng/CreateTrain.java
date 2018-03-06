@@ -18,6 +18,7 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.nopain_nogain.npng.dbtables.TrainTable;
 
@@ -27,12 +28,14 @@ import java.util.ArrayList;
 public class CreateTrain extends AppCompatActivity {
     ArrayList<TrainTable> trainTable;
     TextView textView;
+    DBHelper db = null;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_train);
 
-        final DBHelper db = new DBHelper(this);
+        db = new DBHelper(this);
         trainTable = db.getAllTrain();
 
         ListView trainList = findViewById(R.id.TrainList);
@@ -89,36 +92,17 @@ public class CreateTrain extends AppCompatActivity {
         alertDialog.setView(input);
         alertDialog.setPositiveButton("DONE", new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int which) {
-                Intent intent7 = new Intent (getApplicationContext(), TrainList.class);
-                intent7.putExtra("trainName",input.getText().toString());
-                startActivity(intent7);
+                if (0 == db.existNameTrain(input.getText().toString())) {
+                    Intent intent7 = new Intent(getApplicationContext(), TrainList.class);
+                    intent7.putExtra("trainName", input.getText().toString());
+                    startActivity(intent7);
+                } else {
+                    Toast.makeText(getApplicationContext(), "Incorrect Train name, try again",
+                            Toast.LENGTH_SHORT).show();
+                }
             }
         } );
-
         alertDialog.show();
-        }
 
-
-
-    /*public void onClickDeleteItem(View v){
-        AlertDialog.Builder alertDialog = new AlertDialog.Builder(CreateTrain.this);
-        alertDialog.setTitle("Are you sure?");
-        LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,
-                LinearLayout.LayoutParams.MATCH_PARENT);
-
-
-        alertDialog.setNegativeButton("No",new DialogInterface.OnClickListener() {
-            public void onClick(DialogInterface dialog, int which) {
-                recreate();
-            }
-        } );
-
-        alertDialog.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
-            public void onClick(DialogInterface dialog, int which) {
-                //////////////DELETING FOR MISHGUN!!!!!!!!!!!!!!!!!!
-            }
-        } );
-
-        alertDialog.show();
-    }*/
+    }
 }

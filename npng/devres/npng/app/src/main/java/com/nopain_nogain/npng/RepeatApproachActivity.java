@@ -26,6 +26,7 @@ public class RepeatApproachActivity extends AppCompatActivity {
     ListView myList;
     ArrayAdapter<ExerciseTable> adapter;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -37,7 +38,7 @@ public class RepeatApproachActivity extends AppCompatActivity {
 
         ArrayList<ExerciseTable> table = db.getAllExerciseByTrainId(trainId);
 
-
+        Toast.makeText(getApplicationContext(),"Chose the exercise and indicate date",Toast.LENGTH_SHORT).show();
         myList = findViewById(R.id.exerciseList);
 
         adapter = new ArrayAdapter<>(this,

@@ -8,26 +8,25 @@ import android.view.MenuItem;
 import android.widget.CalendarView;
 import android.widget.Toast;
 
+import java.util.Calendar;
 
 public class CalendarActivity extends AppCompatActivity {
     CalendarView calendar;
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_calendar);
         calendar = findViewById(R.id.calendarView1);
         calendar.setOnDateChangeListener(new CalendarView.OnDateChangeListener() {
-
             @Override
             public void onSelectedDayChange(CalendarView cw, int year, int month, int day) {
-                String selectedDate = String.valueOf(month + 1) +
-                        "-" + day + "-" + year + " ";
-                Toast.makeText(getApplicationContext(), selectedDate, Toast.LENGTH_LONG).show();
-                Intent intent1 = new Intent(getApplicationContext(), ShowTrainByDateActivity.class);
-                startActivity(intent1);
-
+                Calendar calendar = Calendar.getInstance();
+                calendar.set(year, month, day);
+                int dayOfWeek = calendar.get(Calendar.DAY_OF_WEEK);
+                //Toast.makeText(getApplicationContext(),"" + dayOfWeek,Toast.LENGTH_LONG).show();
+                Intent intent = new Intent(getApplicationContext(), ShowTrainByDateActivity.class);
+                intent.putExtra("dayOfWeek",dayOfWeek);
+                startActivity(intent);
             }
         });
     }

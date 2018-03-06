@@ -33,7 +33,7 @@ public class CreateExercise extends AppCompatActivity{
         listView = findViewById(R.id.editingExerciseList);
         db =  new DBHelper(this);
 
-        ArrayList<ExerciseTable> table = db.getAllExercise();
+
 
 
         if(db.getCountExercise() == 0) {
@@ -49,6 +49,8 @@ public class CreateExercise extends AppCompatActivity{
                 db.addExercise(new ExerciseTable(0, ex, null, -1));
             }
         }
+
+        ArrayList<ExerciseTable> table = db.getAllExercise();
 
         adapter = new ArrayAdapter<>(this,
                 R.layout.item_exercise_train,R.id.nameExercise, table);

@@ -7,12 +7,17 @@
     android:background="@android:color/darker_gray"
     >
 
+
+
+
+
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="76dp"
         android:layout_alignParentBottom="true"
         android:layout_alignParentStart="true"
-        android:background="#7b7b7b">
+        android:background="#7b7b7b"
+        android:id="@+id/relativeLayout">
 
         <Button
             android:id="@+id/button"

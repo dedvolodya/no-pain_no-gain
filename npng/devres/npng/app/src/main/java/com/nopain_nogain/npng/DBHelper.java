@@ -6,6 +6,7 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
+import android.widget.Toast;
 
 import com.nopain_nogain.npng.dbtables.ApproachTable;
 import com.nopain_nogain.npng.dbtables.ExerciseTable;
@@ -159,6 +160,27 @@ public class DBHelper extends SQLiteOpenHelper {
         }
         return trainTable;
     }
+    TrainTable getTrainByDayWeek(int id) {
+        String query = "SELECT * FROM " + TABLE_TRAINING + " WHERE " + key_day_week + "=" + id;
+        TrainTable trainTable = null;
+
+        SQLiteDatabase db = this.getWritableDatabase();
+        Cursor cursor = db.rawQuery(query, null);
+        try {
+            if (cursor == null || !cursor.moveToFirst()) {
+                return null;
+            }
+            trainTable = new TrainTable(cursor.getInt(0), cursor.getString(1),
+                    cursor.getInt(2), null);
+        } catch (Exception e) {
+            Log.d(TAG, "Error while trying get by id TrainTable from database");
+        } finally {
+            if (cursor != null && !cursor.isClosed()){
+                cursor.close();
+            }
+        }
+        return trainTable;
+    }
 
     ArrayList<TrainTable> getAllTrain() {
         String selectQuery = "SELECT  * FROM " + TABLE_TRAINING;
@@ -198,8 +220,30 @@ public class DBHelper extends SQLiteOpenHelper {
         return id;
     }
 
+    public long existNameTrain (String name) {
+        Log.d("[NAME-TRAIN]", name);
+        String query = "SELECT COUNT(*) FROM " + TABLE_TRAINING +
+                " WHERE " + key_name + " = '" + name + "'";
+        long count = 0;
+
+        SQLiteDatabase db = this.getWritableDatabase();
+        Cursor cursor = null;
+        try {
+            cursor = db.rawQuery(query, null);
+            cursor.moveToFirst();
+            count = cursor.getInt(0);
+        } catch (Exception e) {
+            Log.d(TAG, "Error while trying get all train from database");
+        } finally {
+            if (cursor != null && !cursor.isClosed()) {
+                cursor.close();
+            }
+        }
+        return count;
+    }
+
     // EXERCISE IMPLEMENTATION
-    long  addExercise(ExerciseTable exerciseTable) {
+    public long  addExercise(ExerciseTable exerciseTable) {
         SQLiteDatabase db = this.getWritableDatabase();
         long id = -1;
 
@@ -323,6 +367,28 @@ public class DBHelper extends SQLiteOpenHelper {
             db.endTransaction();
         }
         return id;
+    }
+
+    public long existNameExercise (String name) {
+        Log.d("[NAME-EXRC]", "+"+name+"+");
+        String query = "SELECT COUNT(*) FROM " + TABLE_EXERCISE +
+                " WHERE " + key_name + " = '" + name + "'";
+        long count = 0;
+
+        SQLiteDatabase db = this.getWritableDatabase();
+        Cursor cursor = null;
+        try {
+            cursor = db.rawQuery(query, null);
+            cursor.moveToFirst();
+            count = cursor.getInt(0);
+        } catch (Exception e) {
+            Log.d(TAG, "Error while trying get count exercise from database");
+        } finally {
+            if (cursor != null && !cursor.isClosed()) {
+                cursor.close();
+            }
+        }
+        return count;
     }
 
     // APPROACH IMPLEMENTATION

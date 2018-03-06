@@ -24,6 +24,7 @@ public class RepeatWeightActivity extends AppCompatActivity {
     ArrayList<ApproachTable> approachTable = null;
     ArrayList<RepeatTable> repeatTable = null;
     DBHelper db = null;
+    Boolean flag = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,6 +33,7 @@ public class RepeatWeightActivity extends AppCompatActivity {
         exerciseId = getIntent().getLongExtra("exerciseId", -1);
         trainId = getIntent().getLongExtra("trainId", -1);
         parentLinearLayout = findViewById(R.id.parentLinearLayout);
+        flag = getIntent().getBooleanExtra("flag",false);
 
         db = new DBHelper(this);
 
@@ -83,7 +85,7 @@ public class RepeatWeightActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         // TODO Auto-generated method stub
-        if (item.getItemId() == R.id.backItem) {
+        if (item.getItemId() == R.id.backItem && flag == false) {
             if (repeatTable != null) {
                 ArrayList<Long> repeatId = new ArrayList<>();
                 for (ApproachTable approach : approachTable) {
@@ -97,6 +99,24 @@ public class RepeatWeightActivity extends AppCompatActivity {
             }
 
             Intent intent = new Intent(getApplicationContext(), RepeatApproachActivity.class);
+            intent.putExtra("trainId",trainId);
+            startActivity(intent);
+        }
+
+        if (item.getItemId() == R.id.backItem && flag == true) {
+            if (repeatTable != null) {
+                ArrayList<Long> repeatId = new ArrayList<>();
+                for (ApproachTable approach : approachTable) {
+                    repeatId.add(db.addApproach(approach));
+                }
+                int i = 0;
+                for (RepeatTable repeat : repeatTable) {
+                    repeat.setApproachId(repeatId.get(i));
+                    db.addRepeat(repeat);
+                }
+            }
+
+            Intent intent = new Intent(getApplicationContext(), ViewExerciseFromTrainActivity.class);
             intent.putExtra("trainId",trainId);
             startActivity(intent);
         }

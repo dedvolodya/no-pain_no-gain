@@ -100,27 +100,28 @@ public class TrainList extends AppCompatActivity {
                     public void onClick(DialogInterface dialog, int which) {
                         int a = -1;
                         switch (str) {
-                            case "Monday":
-                                a = 1;
+                            case "Sunday":
+                                a = 0;
                                 break;
-                            case "Tuesday":
+                            case "Monday":
                                 a = 2;
                                 break;
-                            case "Wednesday":
+                            case "Tuesday":
                                 a = 3;
                                 break;
-                            case "Thursday":
+                            case "Wednesday":
                                 a = 4;
                                 break;
-                            case "Friday":
+                            case "Thursday":
                                 a = 5;
                                 break;
-                            case "Saturday":
+                            case "Friday":
                                 a = 6;
                                 break;
-                            case "Sunday":
+                            case "Saturday":
                                 a = 7;
                                 break;
+
                         }
 
                         TrainTable trainTable = new TrainTable(0, trainName, a, exerciseId);
