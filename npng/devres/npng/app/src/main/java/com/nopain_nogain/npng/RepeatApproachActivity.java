@@ -12,6 +12,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.ListView;
@@ -25,6 +26,7 @@ import java.util.ArrayList;
 public class RepeatApproachActivity extends AppCompatActivity {
     ListView myList;
     ArrayAdapter<ExerciseTable> adapter;
+    long trainId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,11 +35,11 @@ public class RepeatApproachActivity extends AppCompatActivity {
 
         DBHelper db = new DBHelper(this);
         Intent intent = getIntent();
-        long trainId = intent.getLongExtra("trainId", -1);
+        trainId = intent.getLongExtra("trainId", -1);
 
         ArrayList<ExerciseTable> table = db.getAllExerciseByTrainId(trainId);
 
-
+        Toast.makeText(getApplicationContext(),"Chose the exercise and indicate date",Toast.LENGTH_SHORT).show();
         myList = findViewById(R.id.exerciseList);
 
         adapter = new ArrayAdapter<>(this,
@@ -60,31 +62,18 @@ public class RepeatApproachActivity extends AppCompatActivity {
             }
         });
 
-    }
+        Button button = findViewById(R.id.add_exercises_to_train);
+        button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent8 = new Intent(getApplicationContext(), CreateTrain.class);
+                startActivity(intent8);
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.only_back_item, menu);
-
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // TODO Auto-generated method stub
-        if (item.getItemId() == R.id.backItem) {
-            Intent intent = new Intent(getApplicationContext(), TrainList.class);
-            startActivity(intent);
-        }
-        return super.onOptionsItemSelected(item);
-    }
-
-    public void OnClickAddExercisesToTrain (View v) {
-
-
-        Intent intent8 = new Intent(getApplicationContext(), CreateTrain.class);
-        startActivity(intent8);
+            }
+        });
 
     }
+
+
 
 }

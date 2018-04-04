@@ -4,12 +4,14 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.Toast;
@@ -33,7 +35,7 @@ public class CreateExercise extends AppCompatActivity{
         listView = findViewById(R.id.editingExerciseList);
         db =  new DBHelper(this);
 
-        ArrayList<ExerciseTable> table = db.getAllExercise();
+
 
 
         if(db.getCountExercise() == 0) {
@@ -50,34 +52,32 @@ public class CreateExercise extends AppCompatActivity{
             }
         }
 
+        ArrayList<ExerciseTable> table = db.getAllExercise();
+
         adapter = new ArrayAdapter<>(this,
                 R.layout.item_exercise_train,R.id.nameExercise, table);
 
         listView.setAdapter(adapter);
 
+        FloatingActionButton button = findViewById(R.id.addNewExercise);
+        button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getApplicationContext(),AddExerciseActivity.class);
+                startActivity(intent);
+            }
+        });
+
+
+
 
     }
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.only_back_item, menu);
-
-        return true;
+    public void onBackPressed() {
+        //super.onBackPressed();
+        startActivity(new Intent(getApplicationContext(),MainActivity.class));
     }
 
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // TODO Auto-generated method stub
-        if (item.getItemId() == R.id.backItem) {
-            Intent intent = new Intent(getApplicationContext(),MainActivity.class);
-            startActivity(intent);
-        }
-        return super.onOptionsItemSelected(item);
-    }
 
-    public void onClickAddExercise(View v){
-        Intent intent = new Intent(getApplicationContext(),AddExerciseActivity.class);
-        startActivity(intent);
-    }
 
     public void onClickDeleteItem(final View v){
 

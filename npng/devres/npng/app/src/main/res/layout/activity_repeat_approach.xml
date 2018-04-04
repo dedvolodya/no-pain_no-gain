@@ -1,22 +1,28 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:weightSum="1"
-    android:background="@android:color/darker_gray">
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:fillViewport="true">
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:orientation="vertical" android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:weightSum="1"
+        android:background="#003d00">
 
-    <ListView
-        android:id="@+id/exerciseList"
-        android:layout_width="match_parent"
-        android:layout_height="459dp" />
+        <ListView
+            android:id="@+id/exerciseList"
+            android:layout_width="match_parent"
+            android:layout_height="459dp"
+            android:background="#fff"/>
 
-    <Button
-        android:id="@+id/add_exercises_to_train"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:onClick="OnClickAddExercisesToTrain"
-        android:text="Save"
-        android:textStyle="italic"/>
+        <Button
+            android:id="@+id/add_exercises_to_train"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Save"
+            android:textStyle="italic"/>
 
 
-</LinearLayout>
+    </LinearLayout>
+</ScrollView>

@@ -39,24 +39,12 @@ public class DeleteTrainActivity extends AppCompatActivity{
         listView.setAdapter(adapter);
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.only_back_item, menu);
-
-        return true;
+    public void onBackPressed() {
+        //super.onBackPressed();
+        startActivity(new Intent(getApplicationContext(),CreateTrain.class));
     }
 
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // TODO Auto-generated method stub
-        if (item.getItemId() == R.id.backItem) {
-            Intent intent = new Intent(getApplicationContext(),CreateTrain.class);
-            startActivity(intent);
-        }
-        return super.onOptionsItemSelected(item);
-    }
-
-    public void onClickDeleteItem(View v){
+    public void onClickDeleteItem(final View v){
 
         AlertDialog.Builder alertDialog = new AlertDialog.Builder(DeleteTrainActivity.this);
         alertDialog.setTitle("Are you sure?");
@@ -73,7 +61,7 @@ public class DeleteTrainActivity extends AppCompatActivity{
         alertDialog.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int which) {
                 int positionView = listView.getPositionForView(v);
-                Toast.makeText(getApplicationContext(), "Train was deleted", Toast.LENGTH_LONG).show();
+                Toast.makeText(getApplicationContext(), "Training was deleted", Toast.LENGTH_LONG).show();
                 long idTrain = adapter.getItem(positionView).getId();
                 // TODO: Need add delete row table approach and repeat depends this exercise
                 dbHelper.deleteTrain(idTrain);

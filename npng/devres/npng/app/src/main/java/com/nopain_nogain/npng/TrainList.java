@@ -31,6 +31,8 @@ public class TrainList extends AppCompatActivity {
     ArrayList<ExerciseTable> exerciseId = new ArrayList<>();
     final String [] daysW =  {"Monday","Tuesday","Wednesday","Thursday","Friday","Saturday","Sunday"};
     String str = "";
+    String trainName;
+
 
 
     @Override
@@ -86,7 +88,7 @@ public class TrainList extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = getIntent();
-                String trainName = intent.getStringExtra("trainName");
+                trainName = intent.getStringExtra("trainName");
 
                 AlertDialog.Builder alertDialog = new AlertDialog.Builder(TrainList.this);
                 alertDialog.setTitle("Chose the day for train");
@@ -100,27 +102,28 @@ public class TrainList extends AppCompatActivity {
                     public void onClick(DialogInterface dialog, int which) {
                         int a = -1;
                         switch (str) {
-                            case "Monday":
-                                a = 1;
+                            case "Sunday":
+                                a = 0;
                                 break;
-                            case "Tuesday":
+                            case "Monday":
                                 a = 2;
                                 break;
-                            case "Wednesday":
+                            case "Tuesday":
                                 a = 3;
                                 break;
-                            case "Thursday":
+                            case "Wednesday":
                                 a = 4;
                                 break;
-                            case "Friday":
+                            case "Thursday":
                                 a = 5;
                                 break;
-                            case "Saturday":
+                            case "Friday":
                                 a = 6;
                                 break;
-                            case "Sunday":
+                            case "Saturday":
                                 a = 7;
                                 break;
+
                         }
 
                         TrainTable trainTable = new TrainTable(0, trainName, a, exerciseId);
@@ -144,21 +147,6 @@ public class TrainList extends AppCompatActivity {
         }
 
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.only_back_item, menu);
-
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // TODO Auto-generated method stub
-        if (item.getItemId() == R.id.backItem) {
-            finish();
-        }
-        return super.onOptionsItemSelected(item);
-    }
     }
 
 

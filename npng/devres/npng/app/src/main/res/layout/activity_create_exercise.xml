@@ -1,23 +1,41 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
+<ScrollView
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
-    android:orientation="vertical"
-    android:background="@android:color/darker_gray">
+    android:fillViewport="true">
 
-    <ListView
-        android:id="@+id/editingExerciseList"
+
+    <android.support.design.widget.CoordinatorLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
-        android:layout_height="450dp" />
-
-    <Button
-        android:id="@+id/addNewExercise"
-        android:layout_width="match_parent"
-        android:layout_height="40dp"
-        android:onClick="onClickAddExercise"
-        android:text="Add Exercise"
-        android:textStyle="italic"/>
+        android:layout_height="match_parent"
+        android:fitsSystemWindows="true"
+        android:orientation="vertical"
+        android:background="#003d00">
 
 
-</LinearLayout>
+
+        <ListView
+            xmlns:android="http://schemas.android.com/apk/res/android"
+            android:id="@+id/editingExerciseList"
+            android:layout_width="match_parent"
+            android:background="#fff"
+            android:layout_height="match_parent" />
+
+        <android.support.design.widget.FloatingActionButton
+            android:id="@+id/addNewExercise"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom|start"
+            android:layout_marginLeft="10dp"
+            android:layout_marginBottom="10dp"
+            android:src="@drawable/float_add"
+            />
+
+    </android.support.design.widget.CoordinatorLayout>
+
+
+
+
+</ScrollView>

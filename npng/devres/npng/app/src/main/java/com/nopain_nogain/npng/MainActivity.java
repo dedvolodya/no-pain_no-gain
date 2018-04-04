@@ -3,19 +3,22 @@ package com.nopain_nogain.npng;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.view.Menu;
 import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
-
 import java.util.ArrayList;
 import java.util.Random;
 
+
 public class MainActivity extends AppCompatActivity {
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+
 
         ArrayList<String> qText = new ArrayList<>();
 
@@ -70,21 +73,39 @@ public class MainActivity extends AppCompatActivity {
         textView.setText(qText.get(number));
 
 
-    }
+        Button buttonCalendar = findViewById(R.id.buttonCalendar);
+        buttonCalendar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent  = new Intent(getApplicationContext(), CalendarActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        Button buttonTrain = findViewById(R.id.button5);
+        buttonTrain.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent4  = new Intent(getApplicationContext(), CreateTrain.class);
+                startActivity(intent4);
+            }
+        });
+
+        Button buttonExercise = findViewById(R.id.button4);
+        buttonExercise.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent5  = new Intent(getApplicationContext(), CreateExercise.class);
+                startActivity(intent5);
+            }
+        });
 
 
-   protected void onClickCalendar (View v) {
-        Intent intent  = new Intent(this, CalendarActivity.class);
-        startActivity(intent);
+    }
+    @Override
+    public void onBackPressed() {
+        android.os.Process.killProcess(android.os.Process.myPid());
+        System.exit(1);
     }
 
-    protected void onClickAdding (View v) {
-        Intent intent4  = new Intent(this, CreateExercise.class);
-        startActivity(intent4);
-    }
-
-    protected void onClickTrain (View v) {
-        Intent intent5  = new Intent(this, CreateTrain.class);
-        startActivity(intent5);
-    }
 }
